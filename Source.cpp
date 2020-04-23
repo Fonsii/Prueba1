@@ -5,5 +5,5 @@ int main() {
 	std::cout << "Hola Luis.";
 	std::cout << std::endl;
 	std::cout << "*.*";
-	cin.get();
+	std::cin.get();
 }
