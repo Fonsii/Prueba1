@@ -8,10 +8,10 @@ public:
 
 	Node();
 	Node(std::string palabra);
-	Node(int uso, std::string palabra);
+	Node(int ocurrencias, std::string palabra);
 
 
-	int uso;
+	int ocurrencias;
 	std::string palabra;
 
 };
