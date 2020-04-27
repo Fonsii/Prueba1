@@ -1,10 +1,15 @@
 #include <iostream>
+#include "Arbol.h"
+#include <iostream>
 
 int main() {
-	std::cout << "Hello World" << std::endl;
-	std::cout << "Hola Luis.";
-	std::cout << std::endl;
-	std::cout << "*.*";
-	std::cout << "Hola Victor.";
-	std::cin.get();
+	Arbol* arbol;
+	arbol = new Arbol();
+
+	arbol->toLower("LUIS");
+	arbol->toLower("ALONSO");
+
+	std::cout << arbol->raiz->palabra << std::endl << arbol->raiz->ocurrencias;
+	std::cout << arbol->izq->raiz->palabra << std::endl << arbol->izq->raiz->ocurrencias;
+
 }
