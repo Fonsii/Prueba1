@@ -8,13 +8,13 @@ class Arbol {
 public:
 
 	Arbol();
-	Arbol(std::string palabra);
+	Arbol(std::string  phrase);
 
-	void toLower(std::string palabra);
-	void add(std::string palabra);
+
+	void add(std::string  phrase);
 
 
 	Arbol* izq;
-	Node* raiz;
+	Node* root;
 	Arbol* der;
 };

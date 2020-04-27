@@ -3,52 +3,42 @@
 Arbol::Arbol()
 {
 	Arbol::izq = nullptr;
-	Arbol::raiz = nullptr;
+	Arbol::root = nullptr;
 	Arbol::der = nullptr;
 }
 
-Arbol::Arbol(std::string palabra)
+Arbol::Arbol(std::string  phrase)
 {
 	Arbol::izq = nullptr;
-	Arbol::raiz = new Node(palabra);
+	Arbol::root = new Node(phrase);
 	Arbol::der = nullptr;
 }
 
-void Arbol::toLower(std::string palabra)
-{
-	std::locale loc;
-	std::string str = palabra;
-	std::string return1;
-	for (std::string::size_type i = 0; i < str.length(); ++i){
-		return1 += std::tolower(str[i], loc);
-	}
-	this->add(return1);
-}
 
-void Arbol::add(std::string palabra)
+void Arbol::add(std::string  phrase)
 {
-	if (raiz == nullptr) {
-		Arbol::Arbol(palabra);
+	if (Arbol::root == nullptr) {
+		Arbol::Arbol(phrase);
 	}
 	else {
-		if (Arbol::raiz->palabra == palabra) {
-			Arbol::raiz->uso++;
+		if (Arbol::root->palabra == phrase) {
+			Arbol::root->ocurrencias++;
 		}
 		else {
-			if (Arbol::raiz->palabra > palabra) {
+			if (Arbol::root->palabra > phrase) {
 				if (Arbol::izq == nullptr) {
-					Arbol::izq = new Arbol(palabra);
+					Arbol::izq = new Arbol(phrase);
 				}
 				else {
-					Arbol::izq->add(palabra);
+					Arbol::izq->add(phrase);
 				}
 			}
 			else {
 				if (Arbol::der == nullptr) {
-					Arbol::der = new Arbol(palabra);
+					Arbol::der = new Arbol(phrase);
 				}
 				else {
-					Arbol::der->add(palabra);
+					Arbol::der->add(phrase);
 				}
 			}
 		}	
