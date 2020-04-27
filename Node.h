@@ -11,7 +11,7 @@ public:
 	Node(int ocurrencias, std::string palabra);
 
 
-	int ocurrencias;
+	int howMany;
 	std::string palabra;
 
 };
