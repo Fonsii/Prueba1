@@ -2,20 +2,18 @@
 
 Node::Node()
 {
-	Node::ocurrencias = 0;
+	Node::howMany = 0;
 	Node::word = nullptr;
 }
 
 Node::Node(std::string newWord)
 {
-	Node::word = word;
-	Node::ocurrencias = 1;
+	Node::word = newWord;
+	Node::howMany = 1;
 }
 
-
-
-Node::Node(int uso, std::string newWord)
+Node::Node(int howMany, std::string newWord)
 {
-	Node::word = word;
-	Node::ocurrencias = uso;
+	Node::word = newWord;
+	Node::howMany = howMany;
 }

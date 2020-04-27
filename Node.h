@@ -6,11 +6,9 @@ class Node {
 
 public:
 	Node();
-	Node(std::string world);
-	Node(int ocurrencias, std::string word);
+	Node(std::string newWord);
+	Node(int howMany , std::string newWord);
 
-
-	int ocurrencias;
+	int howMany;
 	std::string word;
-
 };
