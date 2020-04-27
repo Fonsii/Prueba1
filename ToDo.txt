@@ -1,20 +1,20 @@
 Clases:
 
 Node
-BinaryTree
+BinaryTree (Luis)
 	- Contar palabra
 Controller
 	- Menu
-		- Editar Archivo de Excepciones.
+		- Editar Archivo de Excepciones. (Alonso)
 			- Insertar Excepción.
 			- Modificar Excepción.
 			- Eliminar Excepción.
 			- Consultar Excepciones.
-		- Consultar Ocurrencias (Todas Palabras).
-		- Consultar Ocurrencia (Sola Palabra).
-		- Definir Archivo de Salida.
+		- Consultar Ocurrencias (Todas Palabras). (Luis)
+		- Consultar Ocurrencia (Sola Palabra). (Luis)
+		- Definir Archivo de Salida. (Victor)
 	- Persistencia de datos.
-		- Cargar Excepciones.
-		- Guardar Excepciones.
-		- Cargar árbol.
-		- Guardar árbol.
+		- Cargar Excepciones. (Alonso)
+		- Guardar Excepciones. (Alonso)
+		- Cargar árbol. (Victor)
+		- Guardar árbol. (Victor)
