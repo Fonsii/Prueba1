@@ -14,7 +14,7 @@ Node::Node(std::string palabra)
 
 
 
-Node::Node(int uso, std::string palabra)
+Node::Node(int howMany, std::string palabra)
 {
 	Node::palabra = palabra;
 	Node::howMany = uso;
