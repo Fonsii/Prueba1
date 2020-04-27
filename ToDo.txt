@@ -1,0 +1,20 @@
+Clases:
+
+Node
+BinaryTree
+	- Contar palabra
+Controller
+	- Menu
+		- Editar Archivo de Excepciones.
+			- Insertar Excepción.
+			- Modificar Excepción.
+			- Eliminar Excepción.
+			- Consultar Excepciones.
+		- Consultar Ocurrencias (Todas Palabras).
+		- Consultar Ocurrencia (Sola Palabra).
+		- Definir Archivo de Salida.
+	- Persistencia de datos.
+		- Cargar Excepciones.
+		- Guardar Excepciones.
+		- Cargar árbol.
+		- Guardar árbol.
