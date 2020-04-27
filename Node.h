@@ -5,13 +5,12 @@
 class Node {
 
 public:
-
 	Node();
-	Node(std::string palabra);
-	Node(int ocurrencias, std::string palabra);
+	Node(std::string world);
+	Node(int ocurrencias, std::string word);
 
 
 	int ocurrencias;
-	std::string palabra;
+	std::string word;
 
 };

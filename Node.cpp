@@ -3,19 +3,19 @@
 Node::Node()
 {
 	Node::ocurrencias = 0;
-	Node::palabra = nullptr;
+	Node::word = nullptr;
 }
 
-Node::Node(std::string palabra)
+Node::Node(std::string newWord)
 {
-	Node::palabra = palabra;
+	Node::word = word;
 	Node::ocurrencias = 1;
 }
 
 
 
-Node::Node(int uso, std::string palabra)
+Node::Node(int uso, std::string newWord)
 {
-	Node::palabra = palabra;
+	Node::word = word;
 	Node::ocurrencias = uso;
 }
