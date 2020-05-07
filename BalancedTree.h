@@ -13,7 +13,6 @@ public:
 
 	void add(std::string  newWord);
 
-
 	BalancedTree* left;
 	Node* root;
 	BalancedTree* right;
