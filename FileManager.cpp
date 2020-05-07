@@ -19,6 +19,7 @@ std::string toLower(std::string word)
 }
 
 std::vector<std::string> FileManager::readFromFile(std::string filename, std::vector<std::string> vector) {
+	vector.clear();
 	std::ifstream inputFile;
 	inputFile.open(filename);
 	std::string line;
@@ -40,9 +41,9 @@ std::string FileManager::readFromFile(std::string filename) {
 
 void FileManager::writeToFile(std::string filename, std::vector<std::string> data) {
 	std::ofstream outputFile;
+	outputFile.open(filename);
 	std::vector<std::string>::iterator i;
 	for (i = data.begin(); i != data.end(); i++) {
-		std::cout << *i << std::endl;
 		outputFile << toLower(*i) << std::endl;
 	}
 	outputFile.close();

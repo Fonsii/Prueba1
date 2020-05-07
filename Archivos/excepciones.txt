@@ -1,6 +1,8 @@
-Manzana
-Casa
-Trabajo
+manzana
+casa
+trabajo
 hola
 comida
-ARRIba
+arriba
+luis
+fuego

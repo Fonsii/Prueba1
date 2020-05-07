@@ -58,6 +58,8 @@ void loadExceptions() {
 void saveExceptions(std::vector<std::string> exceptions) {
 	std::unique_ptr<FileManager> file(new FileManager());
 	file->writeToFile(dir + "excepciones.txt", exceptions);
+	exceptions.clear();
+	loadExceptions();
 }
 
 void loadTree() {
@@ -67,7 +69,7 @@ void loadTree() {
 void editExceptions(std::shared_ptr<Menu> menu) {
 	bool finished = false;
 	do {
-		//system("cls");
+		system("cls");
 		int optionSelected = menu->getUserEntryOption(OPTIONS_2, "Seleccione una de las opciones.");
 		std::string exception = "";
 		switch (optionSelected)
@@ -79,19 +81,23 @@ void editExceptions(std::shared_ptr<Menu> menu) {
 			break;
 		case 2:
 			// modificar excepción.
+
 			break;
 		case 3:
 			// eliminar excepción.
 			break;
 		case 4:
 			// ver excepciones.
+			std::cout << "Excepciones: " << std::endl;
+			exceptions.clear();
+			loadExceptions();
+			printVector(exceptions);
 			break;
 		case 5:
 			finished = true;
 			break;
 		}
 		saveExceptions(exceptions);
-		loadExceptions();
 
 	} while (!finished);
 }
@@ -119,7 +125,7 @@ void Controller::start(){
 	setlocale(LC_ALL, "spanish");
 	bool finished = false;
 	do {
-		//system("cls");
+		system("cls");
 		int optionSelected = this->menu->getUserEntryOption(OPTIONS_1, "Seleccione una de las opciones.");
 		switch (optionSelected)
 		{
@@ -134,7 +140,7 @@ void Controller::start(){
 			// Consultar Ocurrencias - Palabra.
 			break;
 		case 4:
-			// Consultar Ocurrencias - Caractér.
+			// Consultar Ocurrencias - Caracter.
 			break;
 		case 5:
 			// Definir Archivo de Salida.
