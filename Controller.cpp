@@ -2,10 +2,19 @@
 #include <string>
 #include <locale>
 #include "Controller.h"
+#include "FileManager.h"
+#include "BalancedTree.h"
 #include "Menu.h"
 #include <Memory>
 #include <locale.h>
+#include <iterator>
 
+// DEFINICION DE VARIABLES
+
+const std::string dir = "Archivos/";
+std::string outputFilename;
+std::vector<std::string> exceptions;
+BalancedTree* wordTree = new BalancedTree(); // TODO: delete al final.
 
 // mensajes predefinidos.
 const std::vector<std::string> OPTIONS_1 = {
@@ -25,28 +34,48 @@ const std::vector<std::string> OPTIONS_2 = {
 	"5) <- Volver."
 };
 
+// --------------------------------------------------
+
 // Aquí van las declaraciones a funciones auxiliares.
 
-std::string Controller::toLower(std::string word)
-{
-	std::locale loc;
-	std::string str = word;
-	std::string result;
-	for (std::string::size_type i = 0; i < str.length(); ++i) {
-		result += std::tolower(str[i], loc);
+void printVector(std::vector<std::string> vector) {
+	std::vector<std::string>::iterator i;
+	for (i = vector.begin(); i != vector.end(); i++) {
+		std::cout << *i << std::endl;
 	}
-	return result;
+}
+
+void loadConfig() {
+	std::unique_ptr<FileManager> file(new FileManager());
+	outputFilename = file->readFromFile(dir + "config.txt");
+}
+
+void loadExceptions() {
+	std::unique_ptr<FileManager> file(new FileManager());
+	exceptions = file->readFromFile(dir + "excepciones.txt", exceptions);
+}
+
+void saveExceptions(std::vector<std::string> exceptions) {
+	std::unique_ptr<FileManager> file(new FileManager());
+	file->writeToFile(dir + "excepciones.txt", exceptions);
+}
+
+void loadTree() {
+	std::unique_ptr<FileManager> file(new FileManager());
 }
 
 void editExceptions(std::shared_ptr<Menu> menu) {
 	bool finished = false;
 	do {
-		system("cls");
+		//system("cls");
 		int optionSelected = menu->getUserEntryOption(OPTIONS_2, "Seleccione una de las opciones.");
+		std::string exception = "";
 		switch (optionSelected)
 		{
 		case 1:
 			// agregar excepción.
+			exception = menu->getUserEntryText("Ingrese la palabra a agregar como excepción.");
+			exceptions.push_back(exception);
 			break;
 		case 2:
 			// modificar excepción.
@@ -61,6 +90,9 @@ void editExceptions(std::shared_ptr<Menu> menu) {
 			finished = true;
 			break;
 		}
+		saveExceptions(exceptions);
+		loadExceptions();
+
 	} while (!finished);
 }
 
@@ -76,10 +108,18 @@ Controller::~Controller() {}
 // ---------------------------------------------------
 
 void Controller::start(){
+
+	// Cargar Datos.
+	loadConfig();
+	loadExceptions();
+	loadTree();
+
+	// -----------------------------------------------
+
 	setlocale(LC_ALL, "spanish");
 	bool finished = false;
 	do {
-		system("cls");
+		//system("cls");
 		int optionSelected = this->menu->getUserEntryOption(OPTIONS_1, "Seleccione una de las opciones.");
 		switch (optionSelected)
 		{
