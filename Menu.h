@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 
 class Menu {
 
@@ -7,6 +8,10 @@ public:
 	Menu();
 	~Menu();
 
-	int getUserEntryOption(std::string message); // pide al usuario ingresar una opción númerica.
-	std::string getUserEntryText(std::string message); // pide al usuario ingresar texto.
+	// pide al usuario ingresar una opción númerica.
+	int getUserEntryOption(std::vector<std::string> options, std::string message);
+
+	// pide al usuario ingresar texto.
+	std::string getUserEntryText(std::string message);
 };
+	

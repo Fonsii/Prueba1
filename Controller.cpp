@@ -66,11 +66,14 @@ void editExceptions(std::shared_ptr<Menu> menu) {
 
 // -------------------------------------------------
 
+// Constructor y destructor
 Controller::Controller() {
 	this->menu = std::make_shared<Menu>();
 }
 
 Controller::~Controller() {}
+
+// ---------------------------------------------------
 
 void Controller::start(){
 	setlocale(LC_ALL, "spanish");

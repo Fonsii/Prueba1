@@ -1,15 +1,7 @@
-#include <iostream>
-#include "Arbol.h"
-#include <iostream>
+#include <memory>
+#include "Controller.h"
 
 int main() {
-	Arbol* arbol;
-	arbol = new Arbol();
-
-	arbol->toLower("LUIS");
-	arbol->toLower("ALONSO");
-
-	std::cout << arbol->raiz->palabra << std::endl << arbol->raiz->ocurrencias;
-	std::cout << arbol->izq->raiz->palabra << std::endl << arbol->izq->raiz->ocurrencias;
-
+	std::unique_ptr<Controller> controller(new Controller());
+	controller->start();
 }
