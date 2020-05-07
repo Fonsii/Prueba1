@@ -17,3 +17,12 @@ Node::Node(int howMany, std::string newWord)
 	Node::word = newWord;
 	Node::howMany = howMany;
 }
+
+Node::Node(Node* tempNode) {
+	Node::word = tempNode->word;
+	Node::howMany = tempNode->howMany;
+}
+
+Node::~Node() {
+
+}
