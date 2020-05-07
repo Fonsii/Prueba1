@@ -8,6 +8,7 @@
 #include <Memory>
 #include <locale.h>
 #include <iterator>
+#include <algorithm>
 
 // DEFINICION DE VARIABLES
 
@@ -38,6 +39,17 @@ const std::vector<std::string> OPTIONS_2 = {
 
 // Aquí van las declaraciones a funciones auxiliares.
 
+std::string lower(std::string word)
+{
+	std::locale loc;
+	std::string str = word;
+	std::string result;
+	for (std::string::size_type i = 0; i < str.length(); ++i) {
+		result += std::tolower(str[i], loc);
+	}
+	return result;
+}
+
 void printVector(std::vector<std::string> vector) {
 	std::vector<std::string>::iterator i;
 	for (i = vector.begin(); i != vector.end(); i++) {
@@ -66,38 +78,80 @@ void loadTree() {
 	std::unique_ptr<FileManager> file(new FileManager());
 }
 
+void showExceptions() {
+	std::cout << "Excepciones: " << std::endl;
+	exceptions.clear();
+	loadExceptions();
+	printVector(exceptions);
+}
+
 void editExceptions(std::shared_ptr<Menu> menu) {
 	bool finished = false;
 	do {
-		system("cls");
 		int optionSelected = menu->getUserEntryOption(OPTIONS_2, "Seleccione una de las opciones.");
 		std::string exception = "";
+		std::string exceptionToReplace = "";
+		std::string exceptionReplacement = "";
+		std::vector<std::string>::iterator i;
+		std::vector<std::string>::iterator j;
+		bool valid = false;
 		switch (optionSelected)
 		{
 		case 1:
 			// agregar excepción.
-			exception = menu->getUserEntryText("Ingrese la palabra a agregar como excepción.");
-			exceptions.push_back(exception);
+			while (!valid) {
+				exception = menu->getUserEntryText("Ingrese la palabra a agregar como excepción.");				
+				i = find(exceptions.begin(), exceptions.end(), exception);
+
+				if (i == exceptions.end()) {
+					exceptions.push_back(exception);
+					valid = true;
+				}
+				else {
+					std::cout << "La excepción ya existe." << std::endl;
+				}
+			}
 			break;
 		case 2:
+			showExceptions();
 			// modificar excepción.
+			while (!valid) {
+				exceptionToReplace = lower(menu->getUserEntryText("Ingrese la excepción a modificar."));
+				exceptionReplacement = lower(menu->getUserEntryText("Ingrese la nueva excepción."));
+				i = find(exceptions.begin(), exceptions.end(), exceptionToReplace);
+				if (i != exceptions.end()) {
 
+					j = find(exceptions.begin(), exceptions.end(), exceptionReplacement);
+					if (j == exceptions.end()) {
+						*i = exceptionReplacement;
+						valid = true;
+					}
+					else {
+						std::cout << "La excepción modificada ya existe." << std::endl;
+					}
+				}
+				else {
+					std::cout << "La excepción a modificar no existe." << std::endl;
+				}
+			}
 			break;
 		case 3:
+			showExceptions();
 			// eliminar excepción.
+			exceptionReplacement = lower(menu->getUserEntryText("Ingrese la excepción a borrar."));
+			exceptions.erase(std::remove(exceptions.begin(), exceptions.end(), exceptionReplacement), exceptions.end());
 			break;
 		case 4:
 			// ver excepciones.
-			std::cout << "Excepciones: " << std::endl;
-			exceptions.clear();
-			loadExceptions();
-			printVector(exceptions);
+			showExceptions();
+			system("pause");
 			break;
 		case 5:
 			finished = true;
 			break;
 		}
 		saveExceptions(exceptions);
+		system("cls");
 
 	} while (!finished);
 }

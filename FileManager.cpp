@@ -7,6 +7,7 @@ FileManager::FileManager() {}
 
 FileManager::~FileManager() {}
 
+// pasa un string a minúscula.
 std::string toLower(std::string word)
 {
 	std::locale loc;

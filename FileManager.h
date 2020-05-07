@@ -6,7 +6,7 @@
 class FileManager {
 public:
 	FileManager();
-	~FileManager();
+	virtual ~FileManager();
 
 	std::vector<std::string> readFromFile(std::string, std::vector<std::string>);
 	std::string readFromFile(std::string);

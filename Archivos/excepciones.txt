@@ -1,8 +1,8 @@
-manzana
 casa
 trabajo
 hola
 comida
 arriba
-luis
 fuego
+magia
+hierba
