@@ -18,6 +18,7 @@ std::string toLower(std::string word)
 	return result;
 }
 
+// lee un archivo y carga los valores en un vector.
 std::vector<std::string> FileManager::readFromFile(std::string filename, std::vector<std::string> vector) {
 	vector.clear();
 	std::ifstream inputFile;
