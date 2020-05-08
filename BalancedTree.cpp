@@ -30,7 +30,7 @@ BalancedTree::BalancedTree(BalancedTree* left, Node* root, BalancedTree* right) 
 }
 
 BalancedTree::~BalancedTree() {
-
+	this->root->~Node();
 }
 
 void BalancedTree::rotateR() {

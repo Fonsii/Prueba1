@@ -2,7 +2,7 @@ Clases:
 
 Node
 BinaryTree (Luis)
-	- Contar palabra
+	- Contar palabra(Ya)
 Controller
 	- Menu
 		- Editar Archivo de Excepciones. (Alonso)
@@ -10,8 +10,8 @@ Controller
 			- Modificar Excepción.
 			- Eliminar Excepción.
 			- Consultar Excepciones.
-		- Consultar Ocurrencias (Todas Palabras). (Luis)
-		- Consultar Ocurrencia (Sola Palabra). (Luis)
+		- Consultar Ocurrencias (Todas Palabras). (Luis)(Ya) - Metodo toString en BalancedTree  (Tanto para este y el otro metodo hacer el cout solo devuelven una string)
+		- Consultar Ocurrencia (Sola Palabra). (Luis)(Ya) - Metodo search en BalancedTree (Enviar como parametro la palabra a buscar)  
 		- Definir Archivo de Salida. (Victor)
 	- Persistencia de datos.
 		- Cargar Excepciones. (Alonso)
