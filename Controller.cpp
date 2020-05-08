@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <string>
 #include <locale>
@@ -9,6 +11,7 @@
 #include <locale.h>
 #include <iterator>
 #include <algorithm>
+#include "CharTree.h"
 
 // DEFINICION DE VARIABLES
 
@@ -75,7 +78,15 @@ void saveExceptions(std::vector<std::string> exceptions) {
 }
 
 void loadTree() {
-	std::unique_ptr<FileManager> file(new FileManager());
+	BalancedTree* file = new BalancedTree();
+	file->add("Luis");
+	file->add("Alfonso");
+	file->add("Hola");
+	std::cout << file->toString() << std::endl;
+	std::unique_ptr<CharTree> chars = std::make_unique <CharTree>();
+	chars->getCharTree(file);
+	std::cout<<chars->toString();
+
 }
 
 void showExceptions() {
@@ -170,38 +181,38 @@ Controller::~Controller() {}
 void Controller::start(){
 
 	// Cargar Datos.
-	loadConfig();
-	loadExceptions();
+	//loadConfig();
+	//loadExceptions();
 	loadTree();
 
 	// -----------------------------------------------
 
-	setlocale(LC_ALL, "spanish");
-	bool finished = false;
-	do {
-		system("cls");
-		int optionSelected = this->menu->getUserEntryOption(OPTIONS_1, "Seleccione una de las opciones.");
-		switch (optionSelected)
-		{
-		case 1:
-			// Editar el archivo de excepciones.
-			editExceptions(this->menu);
-			break;
-		case 2:
-			// Consultar Ocurrencias - Todo.
-			break;
-		case 3:
-			// Consultar Ocurrencias - Palabra.
-			break;
-		case 4:
-			// Consultar Ocurrencias - Caracter.
-			break;
-		case 5:
-			// Definir Archivo de Salida.
-			break;
-		case 6:
-			finished = true;
-			break;
-		}
-	} while (!finished);
+	//setlocale(LC_ALL, "spanish");
+	//bool finished = false;
+	//do {
+	//	system("cls");
+	//	int optionSelected = this->menu->getUserEntryOption(OPTIONS_1, "Seleccione una de las opciones.");
+	//	switch (optionSelected)
+	//	{
+	//	case 1:
+	//		// Editar el archivo de excepciones.
+	//		editExceptions(this->menu);
+	//		break;
+	//	case 2:
+	//		// Consultar Ocurrencias - Todo.
+	//		break;
+	//	case 3:
+	//		// Consultar Ocurrencias - Palabra.
+	//		break;
+	//	case 4:
+	//		// Consultar Ocurrencias - Caracter.
+	//		break;
+	//	case 5:
+	//		// Definir Archivo de Salida.
+	//		break;
+	//	case 6:
+	//		finished = true;
+	//		break;
+	//	}
+	//} while (!finished);
 }

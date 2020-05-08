@@ -140,10 +140,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BalancedTree.cpp" />
-    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="CharTree.cpp" />
+    <ClCompile Include="CharTree.h" />
+    <ClCompile Include="Controller.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">opengl32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="NodeChar.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +157,7 @@
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="NodeChar.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ToDo.txt" />

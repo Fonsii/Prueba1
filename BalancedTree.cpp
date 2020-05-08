@@ -5,7 +5,6 @@ BalancedTree::BalancedTree()
 	BalancedTree::left = nullptr;
 	BalancedTree::root = nullptr;
 	BalancedTree::right = nullptr;
-	balance_factor = 0;
 }
 
 BalancedTree::BalancedTree(std::string newWord)
@@ -13,34 +12,37 @@ BalancedTree::BalancedTree(std::string newWord)
 	BalancedTree::left = nullptr;
 	BalancedTree::root = new Node(newWord);
 	BalancedTree::right = nullptr;
-	balance_factor = 0;
+}
+
+BalancedTree::BalancedTree(BalancedTree* ptr) {
+	this->left = ptr->left;
+	this->root = ptr->root;
+	this->right = ptr->right;
+
 }
 
 BalancedTree::BalancedTree(BalancedTree* left, Node* root, BalancedTree* right) {
 	BalancedTree::left = left;
 	BalancedTree::root = root;
 	BalancedTree::right = right;
-	int pi = 0;
-	int pd = 0;
-	if (this->left != nullptr)
-		pi = this->left->getHeight();
-	if (this->right != nullptr)
-		pd = this->right->getHeight();
-	this->balance_factor = pi - pd;
 }
 
 BalancedTree::~BalancedTree() {
-	this->root->~Node();
+	//if (this->left != nullptr) {
+	//	this->left->~BalancedTree();
+	//}
+	//if (this->right != nullptr) {
+	//	this->right->~BalancedTree();
+	//}
+	//this->root->~Node();
 }
 
 void BalancedTree::rotateR() {
 	Node* tmp = new Node(this->left->root);
-	BalancedTree* aBorrar1 = this->left->right;
+	BalancedTree* aBorrar1 = new BalancedTree(this->left->right);
 	this->right = new BalancedTree(aBorrar1, this->root, this->right);
 	this->left = this->left->left;
-	delete aBorrar1;
 	this->root = tmp;
-
 }
 
 /*
@@ -51,7 +53,6 @@ void BalancedTree::rotateL() {
 	BalancedTree* aBorrar1 = this->right->left;
 	this->right = this->right->right;
 	this->left = new BalancedTree(this->left, this->root, aBorrar1);
-	delete aBorrar1;
 	this->root = tmp;
 }
 
@@ -63,7 +64,6 @@ void BalancedTree::rotateRL() {
 	BalancedTree* aBorrar1 = this->right->left->right;
 	this->right->left = this->right->left->left;
 	this->right->right = new BalancedTree(aBorrar1, this->right->root, this->right->right);
-	delete aBorrar1;
 	this->right->root = tmp;
 	rotateL();
 }
@@ -73,10 +73,9 @@ void BalancedTree::rotateRL() {
 */
 void BalancedTree::rotateLR() {
 	Node* tmp = new Node(this->left->right->root);
-	BalancedTree* aBorrar1 = this->left->right->left;
+	BalancedTree* aBorrar1 = new BalancedTree(this->left->right->left);
 	this->left->right = this->left->right->right;
 	this->left->left = new BalancedTree(this->left->left, this->left->root, aBorrar1);
-	delete aBorrar1;
 	this->left->root = tmp;
 	rotateR();
 }
@@ -107,13 +106,13 @@ int BalancedTree::getHeight() {
 void BalancedTree::computeBalance() {
 	int pi = (this->left == nullptr) ? 0 : this->left->getHeight() + 1;
 	int pd = (this->right == nullptr) ? 0 : this->right->getHeight() + 1;
-	int fb = pi - pd;
+	int balance_factor = pi - pd;
 
-	switch (fb) {
+	switch (balance_factor) {
 	case 0:case 1:case -1:break;
 
 	case 2:
-		if (this->left != NULL && this->left->balance_factor == 1) {
+		if (this->left != nullptr && balance_factor == 2) {
 			rotateR();
 		}
 		else {
@@ -121,7 +120,7 @@ void BalancedTree::computeBalance() {
 		}
 		break;
 	case -2:
-		if (this->right != NULL && this->right->balance_factor == -1) {
+		if (this->right != nullptr && balance_factor == -2) {
 			rotateL();
 		}
 		else {

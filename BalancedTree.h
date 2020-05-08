@@ -1,9 +1,10 @@
 #pragma once
+
 #include "Node.h"
 #include <string>
-#include <locale>
 #include<sstream>
 #include<iomanip>
+
 
 class BalancedTree {
 
@@ -11,6 +12,7 @@ public:
 
 	BalancedTree();
 	BalancedTree(std::string  newWord);
+	BalancedTree(BalancedTree* ptr);
 	BalancedTree(BalancedTree* left, Node* root, BalancedTree* right);
 	virtual ~BalancedTree();
 
@@ -29,5 +31,7 @@ public:
 	BalancedTree* left;
 	Node* root;
 	BalancedTree* right;
-	int balance_factor;
+
+	
+
 };
