@@ -11,5 +11,4 @@ NodeChar::NodeChar(NodeChar* tempNode){
 }
 
 NodeChar::~NodeChar(){
-
 }

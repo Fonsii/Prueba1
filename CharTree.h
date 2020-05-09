@@ -24,6 +24,7 @@ public:
 	void computeBalance();
 	void add(char newWord);
 	void getCharTree(BalancedTree* tree);
+	std::string search(char toSearch);
 	std::string toString();
 
 	CharTree* left;

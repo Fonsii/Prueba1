@@ -18,10 +18,14 @@ public:
 
 
 	void add(std::string  newWord);
+	void erase(std::string toErase);
 	void rotateR();
 	void rotateL();
 	void rotateRL();
 	void rotateLR(); 
+	int getWeight();
+	std::string getMajorLess();
+	std::string getLessMajor();
 	void computeBalance();
 	int getHeight();
 	std::string search(std::string toSearch);

@@ -17,8 +17,11 @@
 
 const std::string dir = "Archivos/";
 std::string outputFilename;
+std::string inputString = "";
+char inputChar = ' ';
 std::vector<std::string> exceptions;
 BalancedTree* wordTree = new BalancedTree(); // TODO: delete al final.
+CharTree* charTree = new CharTree();
 
 // mensajes predefinidos.
 const std::vector<std::string> OPTIONS_1 = {
@@ -172,14 +175,15 @@ Controller::~Controller() {}
 
 void Controller::start(){
 
-	 Cargar Datos.
+	//Cargar Datos;
 	loadConfig();
 	loadExceptions();
 	loadTree();
 
-	 -----------------------------------------------
 
-	setlocale(LC_ALL, "spanish");
+	// -----------------------------------------------
+
+	
 	bool finished = false;
 	do {
 		system("cls");
@@ -191,13 +195,22 @@ void Controller::start(){
 			editExceptions(this->menu);
 			break;
 		case 2:
-			// Consultar Ocurrencias - Todo.
+			// Consultar Ocurrencias - Todo
+			std::cout << wordTree->toString();
 			break;
 		case 3:
 			// Consultar Ocurrencias - Palabra.
+			std::cout << "Palabra a buscar: ";
+			std::cin >> inputString;
+			std::cout << wordTree->search(inputString) << std::endl;
 			break;
 		case 4:
 			// Consultar Ocurrencias - Caracter.
+			std::cout << "Caracter a buscar: ";
+			std::cin >> inputChar;
+			charTree->getCharTree(wordTree);
+			std::cout << charTree->search(inputChar) << std::endl;
+			delete charTree;
 			break;
 		case 5:
 			// Definir Archivo de Salida.

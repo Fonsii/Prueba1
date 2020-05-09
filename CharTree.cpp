@@ -106,7 +106,7 @@ void CharTree::computeBalance() {
 	case 0:case 1:case -1:break;
 
 	case 2:
-		if (this->left != nullptr && balance_factor == 2) {
+		if (this->left != nullptr && balance_factor == 1) {
 			rotateR();
 		}
 		else {
@@ -114,7 +114,7 @@ void CharTree::computeBalance() {
 		}
 		break;
 	case -2:
-		if (this->right != nullptr && balance_factor == -2) {
+		if (this->right != nullptr && balance_factor == -1) {
 			rotateL();
 		}
 		else {
@@ -167,6 +167,31 @@ void CharTree::getCharTree(BalancedTree* Tree) {
 		this->getCharTree(Tree->right);
 	}
 }
+
+std::string CharTree::search(char toSearch) {
+	std::stringstream returnString;
+
+	if (this != nullptr) {
+		if (this->root->character == toSearch) {
+			returnString << this->root->character;
+			returnString << std::setw(2);
+			returnString << this->root->howMuch;
+			returnString << std::endl;
+		}
+		else if (this->root->character < toSearch) {
+			returnString << this->right->search(toSearch);
+		}
+		else if (this->root->character > toSearch) {
+			returnString << this->left->search(toSearch);
+		}
+	}
+	else {
+		returnString << "Palabra no encontrada";
+		returnString << std::endl;
+	}
+	return returnString.str();
+}
+
 
 std::string CharTree::toString() {
 	std::stringstream returnString;

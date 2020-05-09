@@ -1,4 +1,5 @@
 #include "BalancedTree.h"
+#include <iostream>
 
 BalancedTree::BalancedTree()
 {
@@ -28,18 +29,22 @@ BalancedTree::BalancedTree(BalancedTree* left, Node* root, BalancedTree* right) 
 }
 
 BalancedTree::~BalancedTree() {
-	//if (this->left != nullptr) {
-	//	this->left->~BalancedTree();
-	//}
-	//if (this->right != nullptr) {
-	//	this->right->~BalancedTree();
-	//}
-	//this->root->~Node();
+	
+	if (this->left != nullptr) {
+		this->left->~BalancedTree();
+	}
+	if (this->right != nullptr) {
+		this->right->~BalancedTree();
+	}
+	this->root->~Node();
+	this->root = nullptr;
 }
 
 void BalancedTree::rotateR() {
 	Node* tmp = new Node(this->left->root);
-	BalancedTree* aBorrar1 = new BalancedTree(this->left->right);
+	BalancedTree* aBorrar1 = this->left->right;
+	delete this->left->right;
+	delete this->left->root;
 	this->right = new BalancedTree(aBorrar1, this->root, this->right);
 	this->left = this->left->left;
 	this->root = tmp;
@@ -51,6 +56,8 @@ void BalancedTree::rotateR() {
 void BalancedTree::rotateL() {
 	Node* tmp = new Node(this->right->root);
 	BalancedTree* aBorrar1 = this->right->left;
+	delete this->right->left;
+	delete this->right->root;
 	this->right = this->right->right;
 	this->left = new BalancedTree(this->left, this->root, aBorrar1);
 	this->root = tmp;
@@ -62,6 +69,8 @@ void BalancedTree::rotateL() {
 void BalancedTree::rotateRL() {
 	Node* tmp = new Node(this->right->left->root);
 	BalancedTree* aBorrar1 = this->right->left->right;
+	delete this->right->left->right;
+	delete this->right->left->root;
 	this->right->left = this->right->left->left;
 	this->right->right = new BalancedTree(aBorrar1, this->right->root, this->right->right);
 	this->right->root = tmp;
@@ -73,7 +82,9 @@ void BalancedTree::rotateRL() {
 */
 void BalancedTree::rotateLR() {
 	Node* tmp = new Node(this->left->right->root);
-	BalancedTree* aBorrar1 = new BalancedTree(this->left->right->left);
+	BalancedTree* aBorrar1 = this->left->right->left;
+	delete this->left->right->left;
+	delete this->left->right->root;
 	this->left->right = this->left->right->right;
 	this->left->left = new BalancedTree(this->left->left, this->left->root, aBorrar1);
 	this->left->root = tmp;
@@ -85,25 +96,38 @@ int BalancedTree::getHeight() {
 	int pi = 0;
 	int pd = 0;
 
-	if (this->left == nullptr) {
-		pi = 0;
+	if (this->left != nullptr) {
+		pi = pi + this->left->getHeight() + 1;
 	}
-	else {
-	pi = pi + this->left->getHeight() + 1;
-}
 
-	if (this->right == nullptr) {
-	pd = 0;
-}
-	else {
-	pd = pd + this->right->getHeight() + 1;
-}
+	if(this->right != nullptr){
+		pd = pd + this->right->getHeight() + 1;
+	}
 
 	p = (pi > pd) ? pi : pd;
 	return p;
 }
 
+int BalancedTree::getWeight(){
+	int weight = 0;
+	if (this->root != nullptr)
+	{
+		if (this->left != nullptr)
+		{
+			weight += this->left->getWeight();
+		}
+		
+		if (this->right != nullptr)
+		{
+			weight += this->right->getWeight();
+		}
+		weight++;
+	}
+	return weight;
+}
+
 void BalancedTree::computeBalance() {
+	
 	int pi = (this->left == nullptr) ? 0 : this->left->getHeight() + 1;
 	int pd = (this->right == nullptr) ? 0 : this->right->getHeight() + 1;
 	int balance_factor = pi - pd;
@@ -112,7 +136,7 @@ void BalancedTree::computeBalance() {
 	case 0:case 1:case -1:break;
 
 	case 2:
-		if (this->left != nullptr && balance_factor == 2) {
+		if (this->left != nullptr && balance_factor == 2 && this->left->getHeight() == 1) {
 			rotateR();
 		}
 		else {
@@ -120,7 +144,7 @@ void BalancedTree::computeBalance() {
 		}
 		break;
 	case -2:
-		if (this->right != nullptr && balance_factor == -2) {
+		if (this->right != nullptr && balance_factor == -2 && this->right->getHeight() == -1) {
 			rotateL();
 		}
 		else {
@@ -154,6 +178,77 @@ void BalancedTree::add(std::string newWord)
 				else{
 					this->left->add(newWord);
 				}
+		}
+	}
+	this->computeBalance();
+}
+
+std::string BalancedTree::getMajorLess() {
+	std::string major = "";
+	BalancedTree* iter = this->left;
+	bool continue1 = true;
+	while ((iter->root != nullptr) && (continue1)) {
+		major = iter->root->word;
+		if (iter->right != nullptr)
+			iter = iter->right;
+		else
+			continue1 = false;
+	}
+	return major;
+}
+
+std::string BalancedTree::getLessMajor(){
+	std::string less = "";
+	BalancedTree* iter = this->right;
+	bool continue1 = true;
+	while ((iter->root != nullptr) && (continue1)) {
+		less = iter->root->word;
+		if (iter->left != nullptr) {
+			iter = iter->left;
+		}else{
+			continue1 = false;
+		}
+	}
+	return less;
+}
+
+void BalancedTree::erase(std::string toErase)
+{
+	int weightL=0;
+	int weightR=0;
+	std::string newNode;
+	BalancedTree* iter = this;
+	if (this->root != nullptr) {
+		if (iter->root->word == toErase) {
+			if (iter->left != nullptr) {
+				weightL = iter->left->getWeight();
+			}
+			if (iter->right != nullptr) {
+				weightR = iter->right->getWeight();
+			}
+			if (weightL + weightR == 0) {
+				delete iter;
+			}
+			else {
+				if (weightL >= weightR) {
+					newNode = iter->getMajorLess();
+					iter->root->word = newNode;
+					iter->left->erase(newNode);
+				}
+				else {
+					newNode = iter->getLessMajor();
+					iter->root->word = newNode;
+					iter->right->erase(newNode);
+				}
+			}
+		}
+		else {
+			if (iter->left != nullptr && iter->root->word > toErase) {
+				iter->left->erase(toErase);
+			}
+			if (iter->right != nullptr && iter->root->word < toErase) {
+				iter->right->erase(toErase);
+			}
 		}
 	}
 	this->computeBalance();

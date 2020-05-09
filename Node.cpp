@@ -24,5 +24,6 @@ Node::Node(Node* tempNode) {
 }
 
 Node::~Node() {
-
+	word.~basic_string();
+	howMany = NULL;
 }
