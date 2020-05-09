@@ -13,6 +13,7 @@ public:
 	BalancedTree();
 	BalancedTree(std::string  newWord);
 	BalancedTree(BalancedTree* ptr);
+	BalancedTree(Node* root);
 	BalancedTree(BalancedTree* left, Node* root, BalancedTree* right);
 	virtual ~BalancedTree();
 

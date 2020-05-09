@@ -17,8 +17,12 @@
 
 const std::string dir = "Archivos/";
 std::string outputFilename;
+<<<<<<< HEAD
 std::string inputString = "";
 char inputChar = ' ';
+=======
+std::string inputFilename;
+>>>>>>> 9667f56b689467be9a9e416a932ffa02487edbd7
 std::vector<std::string> exceptions;
 BalancedTree* wordTree = new BalancedTree(); // TODO: delete al final.
 CharTree* charTree = new CharTree();
@@ -30,7 +34,8 @@ const std::vector<std::string> OPTIONS_1 = {
 	"3) Consultar Ocurrencias (Palabra específica).",
 	"4) Consultar Ocurrencias (Carácter específico).",
 	"5) Definir Archivo de Salida.",
-	"6) Salir"
+	"6) Cargar Archivo.",
+	"7) Salir"
 };
 
 const std::vector<std::string> OPTIONS_2 = {
@@ -82,6 +87,12 @@ void saveExceptions(std::vector<std::string> exceptions) {
 
 void loadTree() {
 	std::unique_ptr <FileManager> file = std::make_unique<FileManager>();
+	std::vector <std::string> vector;
+	vector = file->readFromFile(dir + "prueba.txt", vector);
+	std::vector<std::string>::iterator i;
+	for (i = vector.begin(); i != vector.end(); i++) {
+		wordTree->add(*i);
+	}
 }
 
 void showExceptions() {
@@ -175,11 +186,19 @@ Controller::~Controller() {}
 
 void Controller::start(){
 
+<<<<<<< HEAD
 	//Cargar Datos;
+=======
+	// Cargar datos.
+>>>>>>> 9667f56b689467be9a9e416a932ffa02487edbd7
 	loadConfig();
 	loadExceptions();
 	loadTree();
 
+<<<<<<< HEAD
+=======
+	// -----------------------------------------------
+>>>>>>> 9667f56b689467be9a9e416a932ffa02487edbd7
 
 	// -----------------------------------------------
 
@@ -216,6 +235,11 @@ void Controller::start(){
 			// Definir Archivo de Salida.
 			break;
 		case 6:
+			// Definir Archivo de Carga.
+			inputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo .txt a cargar."));
+			loadTree();
+			break;
+		case 7:
 			finished = true;
 			break;
 		}

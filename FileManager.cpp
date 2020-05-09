@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <locale>
+#include <regex>
 
 FileManager::FileManager() {}
 
@@ -24,11 +25,21 @@ std::vector<std::string> FileManager::readFromFile(std::string filename, std::ve
 	vector.clear();
 	std::ifstream inputFile;
 	inputFile.open(filename);
-	std::string line;
-	while (getline(inputFile, line)) {
-		vector.push_back(toLower(line));
+	std::string line1;
+	std::string line2;
+	while (getline(inputFile, line1)) {
+		line2 += line1;
 	}
 	inputFile.close();
+
+	std::regex regularExpresion("[^\\s.,:;!?¿]+-()");
+	auto lineBegin = std::sregex_iterator(line2.begin(), line2.end(), regularExpresion);
+	auto lineEnd = std::sregex_iterator();
+
+	for (std::sregex_iterator i = lineBegin; i != lineEnd; ++i) {
+		vector.push_back(toLower((*i).str()));
+	}
+
 	return vector;
 }
 

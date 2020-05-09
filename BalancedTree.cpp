@@ -22,6 +22,13 @@ BalancedTree::BalancedTree(BalancedTree* ptr) {
 
 }
 
+BalancedTree::BalancedTree(Node* root)
+{
+	BalancedTree::left = nullptr;
+	BalancedTree::root = root;
+	BalancedTree::right = nullptr;
+}
+
 BalancedTree::BalancedTree(BalancedTree* left, Node* root, BalancedTree* right) {
 	BalancedTree::left = left;
 	BalancedTree::root = root;
