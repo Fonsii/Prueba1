@@ -22,7 +22,6 @@ std::string inputString = "";
 char inputChar = ' ';
 std::vector<std::string> exceptions;
 BalancedTree* wordTree = new BalancedTree(); // TODO: delete al final.
-CharTree* charTree = new CharTree();
 
 // mensajes predefinidos.
 const std::vector<std::string> OPTIONS_1 = {
@@ -87,8 +86,14 @@ void loadTree() {
 	std::vector <std::string> vector;
 	vector = file->readFromFile(dir + "prueba.txt", vector);
 	std::vector<std::string>::iterator i;
+	std::vector<std::string>::iterator i_found;
 	for (i = vector.begin(); i != vector.end(); i++) {
-		wordTree->add(*i);
+
+		// busque en las excepciones y si lo encuentra, no lo añade.
+		i_found = find(exceptions.begin(), exceptions.end(), *i);
+		if (i_found == exceptions.end()) {
+			wordTree->add(lower(*i));
+		}
 	}
 }
 
@@ -187,6 +192,7 @@ void Controller::start(){
 	loadExceptions();
 	loadTree();
 
+
 	setlocale(LC_ALL, "spanish");
 	bool finished = false;
 	do {
@@ -212,6 +218,7 @@ void Controller::start(){
 			// Consultar Ocurrencias - Caracter.
 			std::cout << "Caracter a buscar: ";
 			std::cin >> inputChar;
+			CharTree* charTree = new CharTree();
 			charTree->getCharTree(wordTree);
 			std::cout << charTree->search(inputChar) << std::endl;
 			delete charTree;
