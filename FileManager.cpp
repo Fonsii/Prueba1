@@ -39,9 +39,21 @@ std::vector<std::string> FileManager::readFromFile(std::string filename, std::ve
 	for (std::sregex_iterator i = lineBegin; i != lineEnd; ++i) {
 		vector.push_back(toLower((*i).str()));
 	}
-
 	return vector;
 }
+
+std::vector<std::string> FileManager::readFromFileVector(std::string filename) {
+	std::vector<std::string> vector;
+	std::ifstream inputFile;
+	inputFile.open(filename);
+	std::string line;
+	while (getline(inputFile, line)) {
+		vector.push_back(toLower(line));
+	}
+	inputFile.close();
+	return vector;
+}
+
 
 std::string FileManager::readFromFile(std::string filename) {
 	std::ifstream inputFile;

@@ -9,6 +9,7 @@ public:
 	virtual ~FileManager();
 
 	std::vector<std::string> readFromFile(std::string, std::vector<std::string>);
+	std::vector<std::string> readFromFileVector(std::string);
 	std::string readFromFile(std::string);
 	void writeToFile(std::string, std::vector<std::string>);
 };

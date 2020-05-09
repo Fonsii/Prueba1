@@ -17,12 +17,9 @@
 
 const std::string dir = "Archivos/";
 std::string outputFilename;
-<<<<<<< HEAD
+std::string inputFilename;
 std::string inputString = "";
 char inputChar = ' ';
-=======
-std::string inputFilename;
->>>>>>> 9667f56b689467be9a9e416a932ffa02487edbd7
 std::vector<std::string> exceptions;
 BalancedTree* wordTree = new BalancedTree(); // TODO: delete al final.
 CharTree* charTree = new CharTree();
@@ -75,7 +72,7 @@ void loadConfig() {
 
 void loadExceptions() {
 	std::unique_ptr<FileManager> file(new FileManager());
-	exceptions = file->readFromFile(dir + "excepciones.txt", exceptions);
+	exceptions = file->readFromFileVector(dir + "excepciones.txt");
 }
 
 void saveExceptions(std::vector<std::string> exceptions) {
@@ -186,23 +183,11 @@ Controller::~Controller() {}
 
 void Controller::start(){
 
-<<<<<<< HEAD
-	//Cargar Datos;
-=======
-	// Cargar datos.
->>>>>>> 9667f56b689467be9a9e416a932ffa02487edbd7
 	loadConfig();
 	loadExceptions();
 	loadTree();
 
-<<<<<<< HEAD
-=======
-	// -----------------------------------------------
->>>>>>> 9667f56b689467be9a9e416a932ffa02487edbd7
-
-	// -----------------------------------------------
-
-	
+	setlocale(LC_ALL, "spanish");
 	bool finished = false;
 	do {
 		system("cls");
