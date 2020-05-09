@@ -22,6 +22,7 @@ std::string inputString = "";
 char inputChar = ' ';
 std::vector<std::string> exceptions;
 BalancedTree* wordTree = new BalancedTree(); // TODO: delete al final.
+CharTree* charTree = new CharTree();
 
 // mensajes predefinidos.
 const std::vector<std::string> OPTIONS_1 = {
@@ -218,7 +219,7 @@ void Controller::start(){
 			// Consultar Ocurrencias - Caracter.
 			std::cout << "Caracter a buscar: ";
 			std::cin >> inputChar;
-			CharTree* charTree = new CharTree();
+			charTree = new CharTree();
 			charTree->getCharTree(wordTree);
 			std::cout << charTree->search(inputChar) << std::endl;
 			delete charTree;
