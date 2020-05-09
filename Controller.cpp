@@ -17,6 +17,7 @@
 
 const std::string dir = "Archivos/";
 std::string outputFilename;
+std::string inputFilename;
 std::vector<std::string> exceptions;
 BalancedTree* wordTree = new BalancedTree(); // TODO: delete al final.
 
@@ -27,7 +28,8 @@ const std::vector<std::string> OPTIONS_1 = {
 	"3) Consultar Ocurrencias (Palabra específica).",
 	"4) Consultar Ocurrencias (Carácter específico).",
 	"5) Definir Archivo de Salida.",
-	"6) Salir"
+	"6) Cargar Archivo.",
+	"7) Salir"
 };
 
 const std::vector<std::string> OPTIONS_2 = {
@@ -172,12 +174,12 @@ Controller::~Controller() {}
 
 void Controller::start(){
 
-	 Cargar Datos.
+	// Cargar datos.
 	loadConfig();
 	loadExceptions();
 	loadTree();
 
-	 -----------------------------------------------
+	// -----------------------------------------------
 
 	setlocale(LC_ALL, "spanish");
 	bool finished = false;
@@ -203,6 +205,11 @@ void Controller::start(){
 			// Definir Archivo de Salida.
 			break;
 		case 6:
+			// Definir Archivo de Carga.
+			inputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo .txt a cargar."));
+			loadTree();
+			break;
+		case 7:
 			finished = true;
 			break;
 		}
