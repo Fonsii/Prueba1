@@ -81,6 +81,12 @@ void saveExceptions(std::vector<std::string> exceptions) {
 
 void loadTree() {
 	std::unique_ptr <FileManager> file = std::make_unique<FileManager>();
+	std::vector <std::string> vector;
+	vector = file->readFromFile(dir + "prueba.txt", vector);
+	std::vector<std::string>::iterator i;
+	for (i = vector.begin(); i != vector.end(); i++) {
+		wordTree->add(*i);
+	}
 }
 
 void showExceptions() {
