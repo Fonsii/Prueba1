@@ -154,8 +154,10 @@ void CharTree::add(char newWord){
 
 void CharTree::getCharTree(BalancedTree* Tree) {
 	if (Tree->root != nullptr) {
-		for (int position = 0; position < Tree->root->word.size()-1; position++) {
-			this->add(Tree->root->word.at(position));
+		for (int multi = 1; multi <= Tree->root->howMany; multi++) {
+			for (int position = 0; position < Tree->root->word.size() - 1; position++) {
+				this->add(Tree->root->word.at(position));
+			}
 		}
 	}
 	if (Tree->left != nullptr) {

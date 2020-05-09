@@ -82,6 +82,7 @@ void loadTree() {
 	file->add("Luis");
 	file->add("Alfonso");
 	file->add("Hola");
+	file->add("Luis");
 	std::cout << file->toString() << std::endl;
 	std::unique_ptr<CharTree> chars = std::make_unique <CharTree>();
 	chars->getCharTree(file);
