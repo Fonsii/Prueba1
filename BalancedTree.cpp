@@ -15,6 +15,15 @@ BalancedTree::BalancedTree(std::string newWord)
 	BalancedTree::right = nullptr;
 }
 
+BalancedTree::BalancedTree(std::string newWord,int howMuch)
+{
+	BalancedTree::left = nullptr;
+	BalancedTree::root = new Node(newWord);
+	BalancedTree::root->howMany = howMuch;
+	BalancedTree::right = nullptr;
+}
+
+
 BalancedTree::BalancedTree(BalancedTree* ptr) {
 	this->left = ptr->left;
 	this->root = ptr->root;
@@ -185,6 +194,36 @@ void BalancedTree::add(std::string newWord)
 				else{
 					this->left->add(newWord);
 				}
+		}
+	}
+	this->computeBalance();
+}
+
+void BalancedTree::add(std::string newWord, int howMuch)
+{
+	if (this->root == nullptr) {
+		this->root = new Node(newWord);
+		this->root->howMany = howMuch;
+	}
+	else {
+		if (this->root->word == newWord) {
+			this->root->howMany++;
+		}
+		else if (this->root->word < newWord) {
+			if (this->right == nullptr) {
+				this->right = new BalancedTree(newWord,howMuch);
+			}
+			else {
+				this->right->add(newWord);
+			}
+		}
+		else if (this->root->word > newWord) {
+			if (this->left == nullptr) {
+				this->left = new BalancedTree(newWord,howMuch);
+			}
+			else {
+				this->left->add(newWord);
+			}
 		}
 	}
 	this->computeBalance();
