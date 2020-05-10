@@ -12,6 +12,7 @@ public:
 
 	BalancedTree();
 	BalancedTree(std::string  newWord);
+	BalancedTree(std::string newWord, int howMuch);
 	BalancedTree(BalancedTree* ptr);
 	BalancedTree(Node* root);
 	BalancedTree(BalancedTree* left, Node* root, BalancedTree* right);
@@ -19,6 +20,7 @@ public:
 
 
 	void add(std::string  newWord);
+	void add(std::string newWord, int howMuch);
 	void erase(std::string toErase);
 	void rotateR();
 	void rotateL();
