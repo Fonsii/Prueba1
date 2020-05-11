@@ -80,10 +80,10 @@ void FileManager::saveTree(std::string filename, std::string stringTree)
 	outputFile.close();
 }
 
-std::vector<std::string> FileManager::readOcurrenceFile(std::string filename, std::vector<int> vectorInt)
+std::vector<std::string> FileManager::readOcurrenceFileString(std::string filename)
 {
 	std::vector<std::string> vectorString;
-	std::vector<std::string> vectorInt;
+	std::vector<int> vectorInt;
 	std::ifstream inputFile;
 	inputFile.open(filename);
 	std::string line;
@@ -91,10 +91,23 @@ std::vector<std::string> FileManager::readOcurrenceFile(std::string filename, st
 		if (line.at(0) > 57) {
 			vectorString.push_back(line);
 		}
-		else {
+	}
+	inputFile.close();
+	return vectorString;
+}
+
+std::vector<int> FileManager::readOcurrenceFileInteger(std::string filename)
+{
+	std::vector<int> vectorInt;
+	std::ifstream inputFile;
+	inputFile.open(filename);
+	std::string line;
+	while (getline(inputFile, line, '=')) {
+		if (line.at(0) <= 57) {
 			vectorInt.push_back(std::stoi(line, nullptr, 10));
 		}
 	}
 	inputFile.close();
-	return vector;
+	return vectorInt;
+
 }
