@@ -33,7 +33,7 @@ public:
 	int getHeight();
 	std::string search(std::string toSearch);
 	std::string toString();
-
+	std::string showTree(std::string t);
 
 	BalancedTree* left;
 	Node* root;

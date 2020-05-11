@@ -54,24 +54,28 @@ void CharTree::rotateL() {
 	Metodo para la rotacion izquierda-derecha
 */
 void CharTree::rotateRL() {
-	NodeChar* tmp = new NodeChar(this->right->left->root);
-	CharTree* aBorrar1 = this->right->left->right;
-	this->right->left = this->right->left->left;
-	this->right = new CharTree(aBorrar1, this->right->root, this->right->right);
-	this->right->root = tmp;
-	rotateL();
+	if (this->right->left) {
+		NodeChar* tmp = new NodeChar(this->right->left->root);
+		CharTree* aBorrar1 = this->right->left->right;
+		this->right->left = this->right->left->left;
+		this->right = new CharTree(aBorrar1, this->right->root, this->right->right);
+		this->right->root = tmp;
+		rotateL();
+	}
 }
 
 /*
 	Metodo para la rotacion derecha-izquierda
 */
 void CharTree::rotateLR() {
-	NodeChar* tmp = new NodeChar(this->left->right->root);
-	CharTree* aBorrar1 = this->left->right->left;
-	this->left->right = this->left->right->right;
-	this->left->left = new CharTree(this->left->left, left->root, aBorrar1);
-	this->left->root = tmp;
-	rotateR();
+	if (this->left->right) {
+		NodeChar* tmp = new NodeChar(this->left->right->root);
+		CharTree* aBorrar1 = this->left->right->left;
+		this->left->right = this->left->right->right;
+		this->left->left = new CharTree(this->left->left, left->root, aBorrar1);
+		this->left->root = tmp;
+		rotateR();
+	}
 }
 
 int CharTree::getHeight() {
@@ -79,20 +83,20 @@ int CharTree::getHeight() {
 	int pi = 0;
 	int pd = 0;
 
-	if (this->left == nullptr) {
-		pi = 0;
+	if (this) {
+		if (this->left) {
+			pi = pi + this->left->getHeight() + 1;
+		}
+		else {
+			pi = 0;
+		}
+		if (this->right) {
+			pd = pd + this->right->getHeight() + 1;
+		}
+		else {
+			pd = 0;
+		}
 	}
-	else {
-		pi = pi + this->left->getHeight() + 1;
-	}
-
-	if (this->right == nullptr) {
-		pd = 0;
-	}
-	else {
-		pd = pd + this->right->getHeight() + 1;
-	}
-
 	p = (pi > pd) ? pi : pd;
 	return p;
 }
@@ -133,7 +137,7 @@ void CharTree::add(char newWord){
 			this->root->howMuch++;
 		}
 		else if (this->root->character < newWord) {
-			if (this->right == nullptr) {
+			if (!this->right) {
 				this->right = new CharTree(newWord);
 			}
 			else {
@@ -141,7 +145,7 @@ void CharTree::add(char newWord){
 			}
 		}
 		else if (this->root->character > newWord) {
-			if (this->left == nullptr) {
+			if (!this->left) {
 				this->left = new CharTree(newWord);
 			}
 			else {
@@ -149,13 +153,13 @@ void CharTree::add(char newWord){
 			}
 		}
 	}
-	this->computeBalance();
+	//this->computeBalance();
 }
 
 void CharTree::getCharTree(BalancedTree* Tree) {
 	if (Tree->root != nullptr) {
-		for (int multi = 1; multi <= Tree->root->howMany; multi++) {
-			for (int position = 0; position < Tree->root->word.size(); position++) {
+		for (int position = 0; position < Tree->root->word.size(); position++) {
+			for (int i = 0; i < Tree->root->howMany; i++) {
 				this->add(Tree->root->word.at(position));
 			}
 		}
@@ -174,7 +178,7 @@ std::string CharTree::search(char toSearch) {
 	if (this != nullptr) {
 		if (this->root->character == toSearch) {
 			returnString << this->root->character;
-			returnString << std::setw(2);
+			returnString << " : ";
 			returnString << this->root->howMuch;
 			returnString << std::endl;
 		}
@@ -198,7 +202,7 @@ std::string CharTree::toString() {
 
 	if (this != nullptr) {
 		returnString << this->root->character;
-		returnString << std::setw(2);
+		returnString << " : ";
 		returnString << this->root->howMuch;
 		returnString << std::endl;
 	}

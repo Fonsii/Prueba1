@@ -89,13 +89,10 @@ void loadTree() {
 	std::vector<std::string>::iterator i;
 	std::vector<std::string>::iterator i_found;
 
-	//std::cout << vector.size() << std::endl;
-
 	for (i = vector.begin(); i != vector.end(); i++) {
 		// busque en las excepciones y si lo encuentra, no lo añade.
 		i_found = find(exceptions.begin(), exceptions.end(), *i);
 		if (i_found == exceptions.end()) {
-			std::cout << *i << std::endl;
 			wordTree->add(lower(*i));
 		}
 	}
@@ -179,7 +176,7 @@ void editExceptions(std::shared_ptr<Menu> menu) {
 			break;
 		}
 		saveExceptions(exceptions);
-		//system("cls");
+		system("cls");
 
 	} while (!finished);
 }
@@ -205,7 +202,7 @@ void Controller::start(){
 
 	bool finished = false;
 	do {
-		//system("cls");
+		system("cls");
 		int optionSelected = this->menu->getUserEntryOption(OPTIONS_1, "Seleccione una de las opciones.");
 		switch (optionSelected)
 		{
@@ -215,7 +212,7 @@ void Controller::start(){
 			break;
 		case 2:
 			// Consultar Ocurrencias - Todo
-			std::cout << wordTree->toString();
+			std::cout << wordTree->toString() << std::endl;
 			system("pause");
 			break;
 		case 3:
@@ -223,8 +220,8 @@ void Controller::start(){
 			std::cout << "Palabra a buscar: ";
 			std::cin >> inputString;
 			std::cout << wordTree->search(inputString) << std::endl;
-			break;
 			system("pause");
+			break;			
 		case 4:
 			// Consultar Ocurrencias - Caracter.
 			std::cout << "Caracter a buscar: ";
@@ -239,14 +236,14 @@ void Controller::start(){
 			// Definir Archivo de Salida.
 			outputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo .txt donde quierre guardar las ocurrencias."));
 			saveTree(outputFilename);
-			break;
 			system("pause");
+			break;			
 		case 6:
 			// Definir Archivo de Carga.
 			inputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo .txt a cargar."));
 			loadTree();
-			break;
 			system("pause");
+			break;			
 		default:
 			finished = true;
 			break;

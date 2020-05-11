@@ -73,8 +73,8 @@ void BalancedTree::rotateR() {
 void BalancedTree::rotateL() {
 	Node* tmp = new Node(this->right->root);
 	BalancedTree* aBorrar1 = this->right->left;
-	delete this->right->left;
-	delete this->right->root;
+	//delete this->right->left;
+	//delete this->right->root;
 	this->right = this->right->right;
 	this->left = new BalancedTree(this->left, this->root, aBorrar1);
 	this->root = tmp;
@@ -84,14 +84,16 @@ void BalancedTree::rotateL() {
 	Metodo para la rotacion izquierda-derecha
 */
 void BalancedTree::rotateRL() {
-	Node* tmp = new Node(this->right->left->root);
-	BalancedTree* aBorrar1 = this->right->left->right;
-	delete this->right->left->right;
-	delete this->right->left->root;
-	this->right->left = this->right->left->left;
-	this->right->right = new BalancedTree(aBorrar1, this->right->root, this->right->right);
-	this->right->root = tmp;
-	rotateL();
+	if (this->right->left) {
+		Node* tmp = new Node(this->right->left->root);
+		BalancedTree* aBorrar1 = this->right->left->right;
+		//delete this->right->left->right;
+		//delete this->right->left->root;
+		this->right->left = this->right->left->left;
+		this->right->right = new BalancedTree(aBorrar1, this->right->root, this->right->right);
+		this->right->root = tmp;
+		rotateL();
+	}
 }
 
 /*
@@ -113,12 +115,20 @@ int BalancedTree::getHeight() {
 	int pi = 0;
 	int pd = 0;
 
-	if (this->left != nullptr) {
-		pi = pi + this->left->getHeight() + 1;
-	}
+	if (this) {
+		if (!this->left) {
+			pi = pi + this->left->getHeight() + 1;
+		}
+		else {
+			pi = 0;
+		}
 
-	if(this->right != nullptr){
-		pd = pd + this->right->getHeight() + 1;
+		if (!this->right) {
+			pd = pd + this->right->getHeight() + 1;
+		}
+		else {
+			pd = 0;
+		}
 	}
 
 	p = (pi > pd) ? pi : pd;
@@ -144,8 +154,6 @@ int BalancedTree::getWeight(){
 }
 
 void BalancedTree::computeBalance() {
-
-
 	if (this->root != nullptr) {
 		int pi = (this->left == nullptr) ? 0 : this->left->getHeight() + 1;
 		int pd = (this->right == nullptr) ? 0 : this->right->getHeight() + 1;
@@ -201,7 +209,7 @@ void BalancedTree::add(std::string newWord)
 				}
 		}
 	}
-	//this->computeBalance();
+	this->computeBalance();
 }
 
 void BalancedTree::add(std::string newWord, int howMuch)
@@ -334,7 +342,7 @@ std::string BalancedTree::toString() {
 
 	if (this != nullptr) {
 		returnString << this->root->word;
-		returnString << "=";
+		returnString << " : ";
 		returnString << this->root->howMany;
 		returnString << std::endl;
 	}
@@ -346,4 +354,21 @@ std::string BalancedTree::toString() {
 	}
 
 	return returnString.str();
+}
+
+std::string BalancedTree::showTree(std::string t) {
+	std::ostringstream stream;
+	if (root == nullptr) {
+		stream << "";
+	}
+	else {
+		if (right != nullptr) {
+			stream << right->showTree(t + "\t");
+		}
+		stream << t << root->word << "\n";
+		if (left != nullptr) {
+			stream << left->showTree(t + "\t");
+		}
+	}
+	return stream.str();
 }
