@@ -98,6 +98,11 @@ void loadTree() {
 	}
 }
 
+void saveTree(std::string outputFilename) {
+	std::unique_ptr <FileManager> file = std::make_unique<FileManager>();
+	file->saveTree(outputFilename, wordTree->toString());
+}
+
 void showExceptions() {
 	std::cout << "Excepciones: " << std::endl;
 	exceptions.clear();
@@ -226,6 +231,8 @@ void Controller::start(){
 			break;
 		case 5:
 			// Definir Archivo de Salida.
+			outputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo .txt donde quierre guardar las ocurrencias."));
+			saveTree(outputFilename);
 			break;
 		case 6:
 			// Definir Archivo de Carga.

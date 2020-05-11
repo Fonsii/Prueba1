@@ -3,6 +3,7 @@
 #include <fstream>
 #include <locale>
 #include <regex>
+#include "BalancedTree.h"
 
 FileManager::FileManager() {}
 
@@ -28,11 +29,11 @@ std::vector<std::string> FileManager::readFromFile(std::string filename, std::ve
 	std::string line1;
 	std::string line2;
 	while (getline(inputFile, line1)) {
-		line2 += line1;
+		line2 += line1;						//PROBAR ASI Y CON line2 += line1 + ",";
 	}
 	inputFile.close();
 
-	std::regex regularExpresion("[^\\s.,:;!?¿]+-()");
+	std::regex regularExpresion("[^\\s.,:;!?¿]+-()#123456789=");
 	auto lineBegin = std::sregex_iterator(line2.begin(), line2.end(), regularExpresion);
 	auto lineEnd = std::sregex_iterator();
 
@@ -72,4 +73,25 @@ void FileManager::writeToFile(std::string filename, std::vector<std::string> dat
 		outputFile << toLower(*i) << std::endl;
 	}
 	outputFile.close();
+}
+
+void FileManager::saveTree(std::string filename, std::string stringTree)
+{
+	std::ofstream outputFile;
+	outputFile.open(filename);
+	outputFile << stringTree;
+	outputFile.close();
+}
+
+std::vector<std::string>FileManager::readOcurrenceFile(std::string filename)
+{
+	std::vector<std::string> vector;
+	std::ifstream inputFile;
+	inputFile.open(filename);
+	std::string line;
+	while (getline(inputFile, line)) {
+		vector.push_back(line);
+	}
+	inputFile.close();
+	return vector;
 }
