@@ -201,7 +201,7 @@ void BalancedTree::add(std::string newWord)
 				}
 		}
 	}
-	//this->computeBalance();
+	this->computeBalance();
 }
 
 void BalancedTree::add(std::string newWord, int howMuch)

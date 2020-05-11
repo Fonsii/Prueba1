@@ -149,7 +149,7 @@ void CharTree::add(char newWord){
 			}
 		}
 	}
-	//this->computeBalance();
+	this->computeBalance();
 }
 
 void CharTree::getCharTree(BalancedTree* Tree) {
