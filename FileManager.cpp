@@ -26,20 +26,18 @@ std::vector<std::string> FileManager::readFromFile(std::string filename, std::ve
 	vector.clear();
 	std::ifstream inputFile;
 	inputFile.open(filename);
-	std::string line1;
-	std::string line2;
-	while (getline(inputFile, line1)) {
-		line2 += line1;						//PROBAR ASI Y CON line2 += line1 + ",";
+	std::string line;
+	std::regex regularExpresion("[^\\s.,:;!?¿]+");
+
+	while (getline(inputFile, line)) {
+		std::cout << line << std::endl;
+		auto lineBegin = std::sregex_iterator(line.begin(), line.end(), regularExpresion);
+		auto lineEnd = std::sregex_iterator();
+		for (std::sregex_iterator i = lineBegin; i != lineEnd; ++i) {
+			vector.push_back(toLower((*i).str()));
+		}
 	}
 	inputFile.close();
-
-	std::regex regularExpresion("[^\\s.,:;!?¿]+-()#123456789=");
-	auto lineBegin = std::sregex_iterator(line2.begin(), line2.end(), regularExpresion);
-	auto lineEnd = std::sregex_iterator();
-
-	for (std::sregex_iterator i = lineBegin; i != lineEnd; ++i) {
-		vector.push_back(toLower((*i).str()));
-	}
 	return vector;
 }
 
@@ -83,14 +81,20 @@ void FileManager::saveTree(std::string filename, std::string stringTree)
 	outputFile.close();
 }
 
-std::vector<std::string>FileManager::readOcurrenceFile(std::string filename)
+std::vector<std::string> FileManager::readOcurrenceFile(std::string filename)
 {
 	std::vector<std::string> vector;
+	std::vector<std::string> vector2;
 	std::ifstream inputFile;
 	inputFile.open(filename);
 	std::string line;
-	while (getline(inputFile, line)) {
-		vector.push_back(line);
+	while (getline(inputFile, line, '=')) {
+		if (line.at(0) > 57) {
+			vector.push_back(line);
+		}
+		else {
+			vector2.push_back(line);
+		}
 	}
 	inputFile.close();
 	return vector;

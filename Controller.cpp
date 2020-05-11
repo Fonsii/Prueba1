@@ -83,13 +83,12 @@ void saveExceptions(std::vector<std::string> exceptions) {
 }
 
 void loadTree() {
-	std::unique_ptr <FileManager> file = std::make_unique<FileManager>();
+	std::unique_ptr<FileManager> file(new FileManager());
 	std::vector <std::string> vector;
 	vector = file->readFromFile(dir + "prueba.txt", vector);
 	std::vector<std::string>::iterator i;
 	std::vector<std::string>::iterator i_found;
 	for (i = vector.begin(); i != vector.end(); i++) {
-
 		// busque en las excepciones y si lo encuentra, no lo añade.
 		i_found = find(exceptions.begin(), exceptions.end(), *i);
 		if (i_found == exceptions.end()) {
@@ -99,7 +98,7 @@ void loadTree() {
 }
 
 void saveTree(std::string outputFilename) {
-	std::unique_ptr <FileManager> file = std::make_unique<FileManager>();
+	std::unique_ptr<FileManager> file = std::make_unique<FileManager>();
 	file->saveTree(outputFilename, wordTree->toString());
 }
 
@@ -176,7 +175,7 @@ void editExceptions(std::shared_ptr<Menu> menu) {
 			break;
 		}
 		saveExceptions(exceptions);
-		system("cls");
+		//system("cls");
 
 	} while (!finished);
 }
@@ -194,12 +193,12 @@ Controller::~Controller() {}
 
 void Controller::start(){
 
+	setlocale(LC_ALL, "spanish");
+
 	loadConfig();
 	loadExceptions();
 	loadTree();
 
-
-	setlocale(LC_ALL, "spanish");
 	bool finished = false;
 	do {
 		system("cls");
@@ -213,6 +212,7 @@ void Controller::start(){
 		case 2:
 			// Consultar Ocurrencias - Todo
 			std::cout << wordTree->toString();
+			system("pause");
 			break;
 		case 3:
 			// Consultar Ocurrencias - Palabra.
@@ -220,6 +220,7 @@ void Controller::start(){
 			std::cin >> inputString;
 			std::cout << wordTree->search(inputString) << std::endl;
 			break;
+			system("pause");
 		case 4:
 			// Consultar Ocurrencias - Caracter.
 			std::cout << "Caracter a buscar: ";
@@ -228,18 +229,20 @@ void Controller::start(){
 			charTree->getCharTree(wordTree);
 			std::cout << charTree->search(inputChar) << std::endl;
 			delete charTree;
+			system("pause");
 			break;
 		case 5:
 			// Definir Archivo de Salida.
 			outputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo .txt donde quierre guardar las ocurrencias."));
 			saveTree(outputFilename);
 			break;
+			system("pause");
 		case 6:
 			// Definir Archivo de Carga.
 			inputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo .txt a cargar."));
 			loadTree();
 			break;
-		case 7:
+		default:
 			finished = true;
 			break;
 		}

@@ -15,7 +15,6 @@ public:
 	CharTree(CharTree* left, NodeChar* root, CharTree* right);
 	virtual ~CharTree();
 
-
 	void rotateR();
 	void rotateRL();
 	void rotateL();

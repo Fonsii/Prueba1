@@ -1,5 +1,6 @@
 #include "BalancedTree.h"
 #include <iostream>
+#include<locale>
 
 BalancedTree::BalancedTree()
 {
@@ -143,35 +144,39 @@ int BalancedTree::getWeight(){
 }
 
 void BalancedTree::computeBalance() {
-	
-	int pi = (this->left == nullptr) ? 0 : this->left->getHeight() + 1;
-	int pd = (this->right == nullptr) ? 0 : this->right->getHeight() + 1;
-	int balance_factor = pi - pd;
 
-	switch (balance_factor) {
-	case 0:case 1:case -1:break;
 
-	case 2:
-		if (this->left != nullptr && balance_factor == 2 && this->left->getHeight() == 1) {
-			rotateR();
+	if (this->root != nullptr) {
+		int pi = (this->left == nullptr) ? 0 : this->left->getHeight() + 1;
+		int pd = (this->right == nullptr) ? 0 : this->right->getHeight() + 1;
+		int balance_factor = pi - pd;
+
+		switch (balance_factor) {
+		case 0:case 1:case -1:break;
+
+		case 2:
+			if (this->left != nullptr && balance_factor == 2 && this->left->getHeight() == 1) {
+				rotateR();
+			}
+			else {
+				rotateLR();
+			}
+			break;
+		case -2:
+			if (this->right != nullptr && balance_factor == -2 && this->right->getHeight() == -1) {
+				rotateL();
+			}
+			else {
+				rotateRL();
+			}
+			break;
 		}
-		else {
-			rotateLR();
-		}
-		break;
-	case -2:
-		if (this->right != nullptr && balance_factor == -2 && this->right->getHeight() == -1) {
-			rotateL();
-		}
-		else {
-			rotateRL();
-		}
-		break;
 	}
 }
 
 void BalancedTree::add(std::string newWord)
 {
+
 	if (this->root == nullptr){
 		this->root = new Node(newWord);
 	}
@@ -196,7 +201,7 @@ void BalancedTree::add(std::string newWord)
 				}
 		}
 	}
-	this->computeBalance();
+	//this->computeBalance();
 }
 
 void BalancedTree::add(std::string newWord, int howMuch)
@@ -329,7 +334,7 @@ std::string BalancedTree::toString() {
 
 	if (this != nullptr) {
 		returnString << this->root->word;
-		returnString << std::setw(2);
+		returnString << "=";
 		returnString << this->root->howMany;
 		returnString << std::endl;
 	}
