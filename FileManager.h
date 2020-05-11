@@ -13,5 +13,6 @@ public:
 	std::string readFromFile(std::string);
 	void writeToFile(std::string, std::vector<std::string>);
 	void saveTree(std::string, std::string);
-	std::vector<std::string>readOcurrenceFile(std::string,std::vector<int>);
+	std::vector<std::string>readOcurrenceFileString(std::string);
+	std::vector<int>readOcurrenceFileInteger(std::string);
 };
