@@ -88,10 +88,14 @@ void loadTree() {
 	vector = file->readFromFile(dir + "prueba.txt", vector);
 	std::vector<std::string>::iterator i;
 	std::vector<std::string>::iterator i_found;
+
+	//std::cout << vector.size() << std::endl;
+
 	for (i = vector.begin(); i != vector.end(); i++) {
 		// busque en las excepciones y si lo encuentra, no lo añade.
 		i_found = find(exceptions.begin(), exceptions.end(), *i);
 		if (i_found == exceptions.end()) {
+			std::cout << *i << std::endl;
 			wordTree->add(lower(*i));
 		}
 	}
@@ -201,7 +205,7 @@ void Controller::start(){
 
 	bool finished = false;
 	do {
-		system("cls");
+		//system("cls");
 		int optionSelected = this->menu->getUserEntryOption(OPTIONS_1, "Seleccione una de las opciones.");
 		switch (optionSelected)
 		{
@@ -242,6 +246,7 @@ void Controller::start(){
 			inputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo .txt a cargar."));
 			loadTree();
 			break;
+			system("pause");
 		default:
 			finished = true;
 			break;

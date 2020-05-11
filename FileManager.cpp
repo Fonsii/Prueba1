@@ -30,7 +30,6 @@ std::vector<std::string> FileManager::readFromFile(std::string filename, std::ve
 	std::regex regularExpresion("[^\\s.,:;!?¿]+");
 
 	while (getline(inputFile, line)) {
-		std::cout << line << std::endl;
 		auto lineBegin = std::sregex_iterator(line.begin(), line.end(), regularExpresion);
 		auto lineEnd = std::sregex_iterator();
 		for (std::sregex_iterator i = lineBegin; i != lineEnd; ++i) {
