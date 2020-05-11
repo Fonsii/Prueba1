@@ -80,19 +80,19 @@ void FileManager::saveTree(std::string filename, std::string stringTree)
 	outputFile.close();
 }
 
-std::vector<std::string> FileManager::readOcurrenceFile(std::string filename)
+std::vector<std::string> FileManager::readOcurrenceFile(std::string filename, std::vector<int> vectorInt)
 {
-	std::vector<std::string> vector;
-	std::vector<std::string> vector2;
+	std::vector<std::string> vectorString;
+	std::vector<std::string> vectorInt;
 	std::ifstream inputFile;
 	inputFile.open(filename);
 	std::string line;
 	while (getline(inputFile, line, '=')) {
 		if (line.at(0) > 57) {
-			vector.push_back(line);
+			vectorString.push_back(line);
 		}
 		else {
-			vector2.push_back(line);
+			vectorInt.push_back(std::stoi(line, nullptr, 10));
 		}
 	}
 	inputFile.close();
