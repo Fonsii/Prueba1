@@ -73,8 +73,8 @@ void BalancedTree::rotateR() {
 void BalancedTree::rotateL() {
 	Node* tmp = new Node(this->right->root);
 	BalancedTree* aBorrar1 = this->right->left;
-	//delete this->right->left;
-	//delete this->right->root;
+	delete this->right->left;
+	delete this->right->root;
 	this->right = this->right->right;
 	this->left = new BalancedTree(this->left, this->root, aBorrar1);
 	this->root = tmp;
@@ -87,8 +87,8 @@ void BalancedTree::rotateRL() {
 	if (this->right->left) {
 		Node* tmp = new Node(this->right->left->root);
 		BalancedTree* aBorrar1 = this->right->left->right;
-		//delete this->right->left->right;
-		//delete this->right->left->root;
+		delete this->right->left->right;
+		delete this->right->left->root;
 		this->right->left = this->right->left->left;
 		this->right->right = new BalancedTree(aBorrar1, this->right->root, this->right->right);
 		this->right->root = tmp;
@@ -342,7 +342,7 @@ std::string BalancedTree::toString() {
 
 	if (this != nullptr) {
 		returnString << this->root->word;
-		returnString << " : ";
+		returnString << "=";
 		returnString << this->root->howMany;
 		returnString << std::endl;
 	}
