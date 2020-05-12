@@ -108,6 +108,7 @@ std::vector<int> FileManager::readOcurrenceFileInteger(std::string filename)
 		}
 	}
 	inputFile.close();
+	vectorInt.push_back(0);
 	return vectorInt;
 
 }

@@ -85,7 +85,7 @@ void saveExceptions(std::vector<std::string> exceptions) {
 void loadTree() {
 	std::unique_ptr<FileManager> file(new FileManager());
 	std::vector <std::string> vector;
-	vector = file->readFromFile(dir + "prueba.txt", vector);
+	vector = file->readFromFile(inputFilename, vector);
 	std::vector<std::string>::iterator i;
 	std::vector<std::string>::iterator i_found;
 
@@ -95,6 +95,20 @@ void loadTree() {
 		if (i_found == exceptions.end()) {
 			wordTree->add(lower(*i));
 		}
+	}
+}
+
+void loadOcurenceTree() {
+	std::unique_ptr<FileManager> file = std::make_unique<FileManager>();
+	std::vector <std::string> vectorString;
+	std::vector <int> vectorInt;
+	vectorString = file->readOcurrenceFileString(dir + "ocurrencias.txt");
+	vectorInt = file->readOcurrenceFileInteger(dir + "ocurrencias.txt");
+	std::vector<std::string>::iterator i;
+	int indice = 0;
+	for (i = vectorString.begin(); i != vectorString.end(); i++) {
+		wordTree->add(*i, vectorInt[indice]);
+		indice++;
 	}
 }
 
@@ -198,7 +212,7 @@ void Controller::start(){
 
 	loadConfig();
 	loadExceptions();
-	loadTree();
+	loadOcurenceTree();  //QUE PASA SI NO HAY ARCHIVO?
 
 	bool finished = false;
 	do {
@@ -234,14 +248,21 @@ void Controller::start(){
 			break;
 		case 5:
 			// Definir Archivo de Salida.
-			outputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo .txt donde quierre guardar las ocurrencias."));
-			saveTree(outputFilename);
+			outputFilename = "ocurrencias.txt";
+			saveTree(dir + outputFilename);
+			std::cout << "El archivo se ha guardado en la carpeta Archivos con el nombre ocurrencias.txt";
 			system("pause");
 			break;			
 		case 6:
 			// Definir Archivo de Carga.
 			inputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo .txt a cargar."));
-			loadTree();
+			inputFilename = dir + inputFilename;
+			if (inputFilename == dir + "prueba.txt") {
+				loadTree();
+			}
+			else {
+				std::cout << "El archivo no existe" << std::endl;
+			}
 			system("pause");
 			break;			
 		default:
