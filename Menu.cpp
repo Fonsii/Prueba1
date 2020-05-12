@@ -6,7 +6,7 @@ Menu::Menu()
 {}
 
 Menu::~Menu() {}
-
+/*Método que devuelve un número, el primer parámetro despliega un menú de un vector, el segundo parámetro despliega un mensaje para ingresar un número*/
 int Menu::getUserEntryOption(std::vector<std::string> options, std::string message) {
 
 	int reply = -1;
@@ -24,7 +24,7 @@ int Menu::getUserEntryOption(std::vector<std::string> options, std::string messa
 	}
 	return reply;
 }
-
+/*Método que devuelve una string, en el parámetro se despliega un mensaje para indicar la string que se solicita*/
 std::string Menu::getUserEntryText(std::string message) {
 	std::string reply;
 	bool validEntry = false;

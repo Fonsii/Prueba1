@@ -10,7 +10,7 @@ FileManager::FileManager() {}
 
 FileManager::~FileManager() {}
 
-// pasa un string a minúscula.
+/*pasa un string a minúscula, el el parámetro se pide la string*/
 std::string toLower(std::string word)
 {
 	std::locale loc;
@@ -22,7 +22,7 @@ std::string toLower(std::string word)
 	return result;
 }
 
-// lee un archivo y carga los valores en un vector.
+/*lee un archivo y carga los valores en un vector, primer par[ametro pide el nombre del archivo a abrir y el segundo el vector donde se va a guardar*/
 std::vector<std::string> FileManager::readFromFile(std::string filename, std::vector<std::string> vector) {
 	vector.clear();
 	std::ifstream inputFile;
@@ -40,7 +40,7 @@ std::vector<std::string> FileManager::readFromFile(std::string filename, std::ve
 	inputFile.close();
 	return vector;
 }
-
+/*lee un archivo y carga los valores en un vector, en el parámetro se solicita el nombre del archivo*/
 std::vector<std::string> FileManager::readFromFileVector(std::string filename) {
 	std::vector<std::string> vector;
 	std::ifstream inputFile;
@@ -53,7 +53,7 @@ std::vector<std::string> FileManager::readFromFileVector(std::string filename) {
 	return vector;
 }
 
-
+/*lee un archivo y vuelve minúsculas los caracteres de la string, el parámetro solicita el nombre del archivo*/
 std::string FileManager::readFromFile(std::string filename) {
 	std::ifstream inputFile;
 	inputFile.open(filename);
@@ -62,7 +62,7 @@ std::string FileManager::readFromFile(std::string filename) {
 	inputFile.close();
 	return toLower(line);
 }
-
+/*guarda un archivo, el primer parámetro solicita el nombre del archivo donde se va a guardar, el segundo parámetro solicita el vector de strings con los datos*/
 void FileManager::writeToFile(std::string filename, std::vector<std::string> data) {
 	std::ofstream outputFile;
 	outputFile.open(filename);
@@ -72,7 +72,7 @@ void FileManager::writeToFile(std::string filename, std::vector<std::string> dat
 	}
 	outputFile.close();
 }
-
+/*guarda el árbol en un archivo, el primer método pide el nombre donde se guarda el archivo, el segundo parámetro solicita el árbol*/
 void FileManager::saveTree(std::string filename, std::string stringTree)
 {
 	std::ofstream outputFile;
@@ -80,7 +80,7 @@ void FileManager::saveTree(std::string filename, std::string stringTree)
 	outputFile << stringTree;
 	outputFile.close();
 }
-
+/*lee el archivo de ocurrencias, el parámetro solicita el nombre del archivo que tiene las ocurrencias*/
 std::map<std::string, int> FileManager::readOcurrenceFileString(std::string filename)
 {
 

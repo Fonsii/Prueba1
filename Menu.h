@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
 #include <vector>
-
+/*Autor: Alonso Moreno
+Versión: 1.0
+Descripción: clase que solicita números o strings para la utilización del menú*/
 class Menu {
 
 public:
