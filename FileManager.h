@@ -5,6 +5,10 @@
 #include <map>
 #include <sstream>
 
+/*Autor: Alonso Moreno y Victor Mora
+Versión: 1.0
+Descripción: clase para leer y guardar los archivos*/
+
 class FileManager {
 public:
 	FileManager();
