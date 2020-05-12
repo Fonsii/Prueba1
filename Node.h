@@ -1,7 +1,11 @@
 #pragma once
 #include <string>
 
-
+/*
+	Autor: Luis Alfonso Jiménez Aguilar
+	Version 1.0
+	Nodo para el arbol balanceado de palabras
+*/
 class Node {
 
 public:

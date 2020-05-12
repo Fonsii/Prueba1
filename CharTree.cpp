@@ -1,25 +1,38 @@
 #include "CharTree.h"
 #include <iostream>
 
+/*
+	Constructor primario de la clase CharTree donde todo esta null
+*/
 CharTree::CharTree() {
 	CharTree::left = nullptr;
 	CharTree::root = nullptr;
 	CharTree::right = nullptr;
 }
 
+/*
+	Constructor del arbol de caracteres para el metodo add
+	@param caracter que va en la raiz
+*/
 CharTree::CharTree(char newWord){
 	CharTree::left = nullptr;
 	CharTree::root = new NodeChar(newWord);
 	CharTree::right = nullptr;
 }
 
+/*
+	Constructor del arbol para las diversas rotaciones
+	@param rama izquierda, raiz y rama derecha
+*/
 CharTree::CharTree(CharTree* left, NodeChar* root, CharTree* right){
 	CharTree::left = left;
 	CharTree::root = root;
 	CharTree::right = right;
 }
 
-
+/*
+	Destructor del arbol de caracteres
+*/
 CharTree::~CharTree() {
 	if (this->left != nullptr) {
 		this->left->~CharTree();
@@ -30,6 +43,9 @@ CharTree::~CharTree() {
 	this->root->~NodeChar();
 }
 
+/*
+	Metodo para la rotacion izquierda
+*/
 void CharTree::rotateR() {
 	NodeChar* tmp = new NodeChar(this->left->root);
 	CharTree* aBorrar1 = this->left->right;
@@ -78,6 +94,10 @@ void CharTree::rotateLR() {
 	}
 }
 
+/*
+	Metodo para la conseguir los pesos del arbol
+	@return peso de la raiz que llamo al metodo
+*/
 int CharTree::getHeight() {
 	int p = 0;
 	int pi = 0;
@@ -101,6 +121,9 @@ int CharTree::getHeight() {
 	return p;
 }
 
+/*
+	Metodo para saber que rotacion hay que realizar
+*/
 void CharTree::computeBalance() {
 	int pi = (this->left == nullptr) ? 0 : this->left->getHeight() + 1;
 	int pd = (this->right == nullptr) ? 0 : this->right->getHeight() + 1;
@@ -128,6 +151,10 @@ void CharTree::computeBalance() {
 	}
 }
 
+/*
+	Metodo de agregado de un caracter
+	@param caracter a agregar en el arbol
+*/
 void CharTree::add(char newWord){
 	if (this->root == nullptr) {
 		this->root = new NodeChar(newWord);
@@ -156,6 +183,10 @@ void CharTree::add(char newWord){
 	//this->computeBalance();
 }
 
+/*
+	Metodo que al recibir un arbol cuenta cuantas caracteres hay un arbol balanceado
+	@param Arbol Balanceado
+*/
 void CharTree::getCharTree(BalancedTree* Tree) {
 	if (Tree->root != nullptr) {
 		for (int position = 0; position < Tree->root->word.size(); position++) {
@@ -172,6 +203,11 @@ void CharTree::getCharTree(BalancedTree* Tree) {
 	}
 }
 
+/*
+	Metodo de busqueda de solo un caracter en el arbol
+	@param caracter a buscar
+	@return si se encuentra el caracter la devuelve y las ocurrencias, si no devuelve "Palabra no encontrada"
+*/
 std::string CharTree::search(char toSearch) {
 	std::stringstream returnString;
 
@@ -196,7 +232,10 @@ std::string CharTree::search(char toSearch) {
 	return returnString.str();
 }
 
-
+/*
+	Metodo para imprimir todo el arbol
+	@return string con todas los caracteres y sus ocurrencias
+*/
 std::string CharTree::toString() {
 	std::stringstream returnString;
 

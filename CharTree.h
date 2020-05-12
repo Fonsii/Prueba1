@@ -5,7 +5,11 @@
 #include <sstream>
 #include <iomanip>
 
-
+/*
+	Autor: Luis Alfonso Jiménez Aguilar
+	Version 1.0
+	Arbol Binario Balanceado de caracteres
+*/
 class CharTree {
 	
 public:

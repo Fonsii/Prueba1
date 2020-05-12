@@ -1,5 +1,9 @@
 #pragma once
-
+/*
+	Autor: Luis Alfonso Jiménez Aguilar
+	Version 1.0
+	Nodo para el arbol balanceado de caracteres
+*/
 class NodeChar{
 
 public:

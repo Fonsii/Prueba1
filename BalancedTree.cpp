@@ -2,6 +2,9 @@
 #include <iostream>
 #include<locale>
 
+/*
+	Constructor primario de la clase BalancedTree donde todo esta null
+*/
 BalancedTree::BalancedTree()
 {
 	BalancedTree::left = nullptr;
@@ -9,6 +12,10 @@ BalancedTree::BalancedTree()
 	BalancedTree::right = nullptr;
 }
 
+/*
+	Constructor del arbol para el metodo add
+	@param palabra que va en la raiz
+*/
 BalancedTree::BalancedTree(std::string newWord)
 {
 	BalancedTree::left = nullptr;
@@ -16,6 +23,10 @@ BalancedTree::BalancedTree(std::string newWord)
 	BalancedTree::right = nullptr;
 }
 
+/*
+	Constructor del arbol para el metodo add para cuando se carga un archivo con ocurrencias
+	@param palabra y ocurrencia
+*/
 BalancedTree::BalancedTree(std::string newWord,int howMuch)
 {
 	BalancedTree::left = nullptr;
@@ -24,7 +35,10 @@ BalancedTree::BalancedTree(std::string newWord,int howMuch)
 	BalancedTree::right = nullptr;
 }
 
-
+/*
+	Constructor del arbol para las diversas rotaciones
+	@param arbol
+*/
 BalancedTree::BalancedTree(BalancedTree* ptr) {
 	this->left = ptr->left;
 	this->root = ptr->root;
@@ -32,19 +46,19 @@ BalancedTree::BalancedTree(BalancedTree* ptr) {
 
 }
 
-BalancedTree::BalancedTree(Node* root)
-{
-	BalancedTree::left = nullptr;
-	BalancedTree::root = root;
-	BalancedTree::right = nullptr;
-}
-
+/*
+	Constructor del arbol para las diversas rotaciones
+	@param rama izquierda, raiz y rama derecha
+*/
 BalancedTree::BalancedTree(BalancedTree* left, Node* root, BalancedTree* right) {
 	BalancedTree::left = left;
 	BalancedTree::root = root;
 	BalancedTree::right = right;
 }
 
+/*
+	Destructor del arbol
+*/
 BalancedTree::~BalancedTree() {
 	
 	if (this->left != nullptr) {
@@ -57,6 +71,9 @@ BalancedTree::~BalancedTree() {
 	this->root = nullptr;
 }
 
+/*
+	Metodo para la rotacion izquierda
+*/
 void BalancedTree::rotateR() {
 	Node* tmp = new Node(this->left->root);
 	BalancedTree* aBorrar1 = this->left->right;
@@ -110,6 +127,10 @@ void BalancedTree::rotateLR() {
 	rotateR();
 }
 
+/*
+	Metodo para la conseguir los pesos del arbol 
+	@return peso de la raiz que llamo al metodo
+*/
 int BalancedTree::getHeight() {
 	int p = 0;
 	int pi = 0;
@@ -135,24 +156,9 @@ int BalancedTree::getHeight() {
 	return p;
 }
 
-int BalancedTree::getWeight(){
-	int weight = 0;
-	if (this->root != nullptr)
-	{
-		if (this->left != nullptr)
-		{
-			weight += this->left->getWeight();
-		}
-		
-		if (this->right != nullptr)
-		{
-			weight += this->right->getWeight();
-		}
-		weight++;
-	}
-	return weight;
-}
-
+/*
+	Metodo para saber que rotacion hay que realizar
+*/
 void BalancedTree::computeBalance() {
 	if (this->root != nullptr) {
 		int pi = (this->left == nullptr) ? 0 : this->left->getHeight() + 1;
@@ -182,6 +188,10 @@ void BalancedTree::computeBalance() {
 	}
 }
 
+/*
+	Metodo de agregado con solo una palabra
+	@param Palabra a agregar en el arbol
+*/
 void BalancedTree::add(std::string newWord)
 {
 
@@ -212,6 +222,10 @@ void BalancedTree::add(std::string newWord)
 	this->computeBalance();
 }
 
+/*
+	Metodo de agregado con palabra y ocurrencia
+	@param palabra y ocurrencia
+*/
 void BalancedTree::add(std::string newWord, int howMuch)
 {
 	if (this->root == nullptr) {
@@ -239,6 +253,10 @@ void BalancedTree::add(std::string newWord, int howMuch)
 	this->computeBalance();
 }
 
+/*
+	Metodo para conseguir el mayor de los menores
+	@return la palabra mas grande de la rama izquierda
+*/
 std::string BalancedTree::getMajorLess() {
 	std::string major = "";
 	BalancedTree* iter = this->left;
@@ -253,6 +271,10 @@ std::string BalancedTree::getMajorLess() {
 	return major;
 }
 
+/*
+	Metodo para conseguir el menor de los mayores
+	@return la palabra mas pequeña de la rama derecha
+*/
 std::string BalancedTree::getLessMajor(){
 	std::string less = "";
 	BalancedTree* iter = this->right;
@@ -268,48 +290,11 @@ std::string BalancedTree::getLessMajor(){
 	return less;
 }
 
-void BalancedTree::erase(std::string toErase)
-{
-	int weightL=0;
-	int weightR=0;
-	std::string newNode;
-	BalancedTree* iter = this;
-	if (this->root != nullptr) {
-		if (iter->root->word == toErase) {
-			if (iter->left != nullptr) {
-				weightL = iter->left->getWeight();
-			}
-			if (iter->right != nullptr) {
-				weightR = iter->right->getWeight();
-			}
-			if (weightL + weightR == 0) {
-				delete iter;
-			}
-			else {
-				if (weightL >= weightR) {
-					newNode = iter->getMajorLess();
-					iter->root->word = newNode;
-					iter->left->erase(newNode);
-				}
-				else {
-					newNode = iter->getLessMajor();
-					iter->root->word = newNode;
-					iter->right->erase(newNode);
-				}
-			}
-		}
-		else {
-			if (iter->left != nullptr && iter->root->word > toErase) {
-				iter->left->erase(toErase);
-			}
-			if (iter->right != nullptr && iter->root->word < toErase) {
-				iter->right->erase(toErase);
-			}
-		}
-	}
-	this->computeBalance();
-}
-
+/*
+	Metodo de busqueda de una palabra en el arbol
+	@param palabra a buscar
+	@return si se encuentra la palabra la devuelve y las ocurrencias, si no devuelve "Palabra no encontrada"
+*/
 std::string BalancedTree::search(std::string toSearch){
 	std::stringstream returnString;
 
@@ -334,6 +319,10 @@ std::string BalancedTree::search(std::string toSearch){
 	return returnString.str();
 }
 
+/*
+	Metodo para imprimir todo el arbol
+	@return string con todas las palabras y sus ocurrencias
+*/
 std::string BalancedTree::toString() {
 	std::stringstream returnString;
 
@@ -351,21 +340,4 @@ std::string BalancedTree::toString() {
 	}
 
 	return returnString.str();
-}
-
-std::string BalancedTree::showTree(std::string t) {
-	std::ostringstream stream;
-	if (root == nullptr) {
-		stream << "";
-	}
-	else {
-		if (right != nullptr) {
-			stream << right->showTree(t + "\t");
-		}
-		stream << t << root->word << root->howMany << "\n";
-		if (left != nullptr) {
-			stream << left->showTree(t + "\t");
-		}
-	}
-	return stream.str();
 }

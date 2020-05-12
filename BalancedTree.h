@@ -5,7 +5,11 @@
 #include<sstream>
 #include<iomanip>
 
-
+/*
+	Autor: Luis Alfonso Jiménez Aguilar
+	Version 1.0
+	Arbol Binario Balanceado de palabras
+*/
 class BalancedTree {
 
 public:
@@ -14,31 +18,25 @@ public:
 	BalancedTree(std::string  newWord);
 	BalancedTree(std::string newWord, int howMuch);
 	BalancedTree(BalancedTree* ptr);
-	BalancedTree(Node* root);
 	BalancedTree(BalancedTree* left, Node* root, BalancedTree* right);
 	virtual ~BalancedTree();
 
 
 	void add(std::string  newWord);
 	void add(std::string newWord, int howMuch);
-	void erase(std::string toErase);
 	void rotateR();
 	void rotateL();
 	void rotateRL();
 	void rotateLR(); 
-	int getWeight();
 	std::string getMajorLess();
 	std::string getLessMajor();
 	void computeBalance();
 	int getHeight();
 	std::string search(std::string toSearch);
 	std::string toString();
-	std::string showTree(std::string t);
 
 	BalancedTree* left;
 	Node* root;
 	BalancedTree* right;
-
-	
 
 };
