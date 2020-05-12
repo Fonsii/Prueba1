@@ -178,7 +178,7 @@ std::string CharTree::search(char toSearch) {
 	if (this != nullptr) {
 		if (this->root->character == toSearch) {
 			returnString << this->root->character;
-			returnString << " : ";
+			returnString << ":";
 			returnString << this->root->howMuch;
 			returnString << std::endl;
 		}

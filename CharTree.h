@@ -2,8 +2,8 @@
 
 #include "BalancedTree.h"
 #include "NodeChar.h"
-#include<sstream>
-#include<iomanip>
+#include <sstream>
+#include <iomanip>
 
 
 class CharTree {

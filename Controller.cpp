@@ -75,17 +75,27 @@ void loadExceptions() {
 	exceptions = file->readFromFileVector(dir + "excepciones.txt");
 }
 
-void saveExceptions(std::vector<std::string> exceptions) {
-	std::unique_ptr<FileManager> file(new FileManager());
-	file->writeToFile(dir + "excepciones.txt", exceptions);
-	exceptions.clear();
-	loadExceptions();
+void loadOcurenceTree() {
+	//wordTree = new BalancedTree();
+	std::unique_ptr<FileManager> file = std::make_unique<FileManager>();
+	std::map<std::string, int> ocurrences = file->readOcurrenceFileString(dir + outputFilename);
+
+	std::vector<std::string>::iterator i_found;
+	for (auto i = ocurrences.begin(); i != ocurrences.end(); ++i) {
+		i_found = find(exceptions.begin(), exceptions.end(), i->first);
+		if (i_found == exceptions.end()) {
+			wordTree->add(i->first, i->second);
+		}
+	}
 }
 
 void loadTree() {
+	wordTree = new BalancedTree();
+	loadOcurenceTree();
+
 	std::unique_ptr<FileManager> file(new FileManager());
 	std::vector <std::string> vector;
-	vector = file->readFromFile(inputFilename, vector);
+	vector = file->readFromFile(dir + inputFilename, vector);
 	std::vector<std::string>::iterator i;
 	std::vector<std::string>::iterator i_found;
 
@@ -98,18 +108,12 @@ void loadTree() {
 	}
 }
 
-void loadOcurenceTree() {
-	std::unique_ptr<FileManager> file = std::make_unique<FileManager>();
-	std::vector <std::string> vectorString;
-	std::vector <int> vectorInt;
-	vectorString = file->readOcurrenceFileString(dir + "ocurrencias.txt");
-	vectorInt = file->readOcurrenceFileInteger(dir + "ocurrencias.txt");
-	std::vector<std::string>::iterator i;
-	int indice = 0;
-	for (i = vectorString.begin(); i != vectorString.end(); i++) {
-		wordTree->add(*i, vectorInt[indice]);
-		indice++;
-	}
+void saveExceptions(std::vector<std::string> exceptions) {
+	std::unique_ptr<FileManager> file(new FileManager());
+	file->writeToFile(dir + "excepciones.txt", exceptions);
+	exceptions.clear();
+	loadExceptions();
+	loadTree();
 }
 
 void saveTree(std::string outputFilename) {
@@ -150,6 +154,7 @@ void editExceptions(std::shared_ptr<Menu> menu) {
 					std::cout << "La excepción ya existe." << std::endl;
 				}
 			}
+			saveExceptions(exceptions);
 			break;
 		case 2:
 			showExceptions();
@@ -173,12 +178,14 @@ void editExceptions(std::shared_ptr<Menu> menu) {
 					std::cout << "La excepción a modificar no existe." << std::endl;
 				}
 			}
+			saveExceptions(exceptions);
 			break;
 		case 3:
 			showExceptions();
 			// eliminar excepción.
 			exceptionReplacement = lower(menu->getUserEntryText("Ingrese la excepción a borrar."));
 			exceptions.erase(std::remove(exceptions.begin(), exceptions.end(), exceptionReplacement), exceptions.end());
+			saveExceptions(exceptions);
 			break;
 		case 4:
 			// ver excepciones.
@@ -189,10 +196,22 @@ void editExceptions(std::shared_ptr<Menu> menu) {
 			finished = true;
 			break;
 		}
-		saveExceptions(exceptions);
+		
 		system("cls");
 
 	} while (!finished);
+}
+
+void setOutputFile(std::shared_ptr<Menu> menu) {
+	std::unique_ptr<FileManager> file = std::make_unique<FileManager>();
+	outputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo de salida con el .txt"));
+	std::vector<std::string> data;
+	data.push_back(outputFilename);
+	file->writeToFile(dir + "config.txt", data);
+	if (wordTree->root) {
+		saveTree(dir + outputFilename);
+	}
+	std::cout << "El archivo se ha guardado en la carpeta Archivos con el nombre " << outputFilename << std::endl;
 }
 
 // -------------------------------------------------
@@ -212,7 +231,7 @@ void Controller::start(){
 
 	loadConfig();
 	loadExceptions();
-	loadOcurenceTree();  //QUE PASA SI NO HAY ARCHIVO?
+	loadOcurenceTree();
 
 	bool finished = false;
 	do {
@@ -225,49 +244,44 @@ void Controller::start(){
 			editExceptions(this->menu);
 			break;
 		case 2:
-			// Consultar Ocurrencias - Todo
-			std::cout << wordTree->toString() << std::endl;
-			system("pause");
+			//std::cout << wordTree->getHeight() << std::endl;
+			if (wordTree->root) {
+				// Consultar Ocurrencias - Todo
+				std::cout << wordTree->toString() << std::endl;
+			}
 			break;
 		case 3:
 			// Consultar Ocurrencias - Palabra.
-			std::cout << "Palabra a buscar: ";
-			std::cin >> inputString;
-			std::cout << wordTree->search(inputString) << std::endl;
-			system("pause");
+			if (wordTree->root) {
+				std::cout << "Palabra a buscar: ";
+				std::cin >> inputString;
+				std::cout << wordTree->search(inputString) << std::endl;
+			}
 			break;			
 		case 4:
 			// Consultar Ocurrencias - Caracter.
-			std::cout << "Caracter a buscar: ";
-			std::cin >> inputChar;
-			charTree = new CharTree();
-			charTree->getCharTree(wordTree);
-			std::cout << charTree->search(inputChar) << std::endl;
-			delete charTree;
-			system("pause");
+			if (wordTree->root) {
+				std::cout << "Caracter a buscar: ";
+				std::cin >> inputChar;
+				charTree = new CharTree();
+				charTree->getCharTree(wordTree);
+				std::cout << charTree->search(inputChar) << std::endl;
+				delete charTree;
+			}
 			break;
 		case 5:
 			// Definir Archivo de Salida.
-			outputFilename = "ocurrencias.txt";
-			saveTree(dir + outputFilename);
-			std::cout << "El archivo se ha guardado en la carpeta Archivos con el nombre ocurrencias.txt";
-			system("pause");
+			setOutputFile(this->menu);
 			break;			
 		case 6:
 			// Definir Archivo de Carga.
 			inputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo .txt a cargar."));
-			inputFilename = dir + inputFilename;
-			if (inputFilename == dir + "prueba.txt") {
-				loadTree();
-			}
-			else {
-				std::cout << "El archivo no existe" << std::endl;
-			}
-			system("pause");
+			loadTree();
 			break;			
 		default:
 			finished = true;
 			break;
 		}
+		system("pause");
 	} while (!finished);
 }

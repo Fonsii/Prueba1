@@ -3,6 +3,7 @@
 #include <fstream>
 #include <locale>
 #include <regex>
+
 #include "BalancedTree.h"
 
 FileManager::FileManager() {}
@@ -80,35 +81,24 @@ void FileManager::saveTree(std::string filename, std::string stringTree)
 	outputFile.close();
 }
 
-std::vector<std::string> FileManager::readOcurrenceFileString(std::string filename)
+std::map<std::string, int> FileManager::readOcurrenceFileString(std::string filename)
 {
-	std::vector<std::string> vectorString;
-	std::vector<int> vectorInt;
+
+	std::map<std::string, int> ocurrences;
+
 	std::ifstream inputFile;
-	inputFile.open(filename);
+	inputFile.open(filename);	
+
 	std::string line;
-	while (getline(inputFile, line, '=')) {
-		if (line.at(0) > 57) {
-			vectorString.push_back(line);
-		}
+	std::string word;
+	int cant;
+
+	while (getline(inputFile, line, ':')) {
+		word = line;
+		getline(inputFile, line);
+		cant = std::stoi(line);
+		ocurrences.insert({word, cant});
 	}
 	inputFile.close();
-	return vectorString;
-}
-
-std::vector<int> FileManager::readOcurrenceFileInteger(std::string filename)
-{
-	std::vector<int> vectorInt;
-	std::ifstream inputFile;
-	inputFile.open(filename);
-	std::string line;
-	while (getline(inputFile, line, '=')) {
-		if (line.at(0) <= 57) {
-			vectorInt.push_back(std::stoi(line, nullptr, 10));
-		}
-	}
-	inputFile.close();
-	vectorInt.push_back(0);
-	return vectorInt;
-
+	return ocurrences;
 }

@@ -219,15 +219,12 @@ void BalancedTree::add(std::string newWord, int howMuch)
 		this->root->howMany = howMuch;
 	}
 	else {
-		if (this->root->word == newWord) {
-			this->root->howMany++;
-		}
-		else if (this->root->word < newWord) {
+		if (this->root->word < newWord) {
 			if (this->right == nullptr) {
 				this->right = new BalancedTree(newWord,howMuch);
 			}
 			else {
-				this->right->add(newWord);
+				this->right->add(newWord, howMuch);
 			}
 		}
 		else if (this->root->word > newWord) {
@@ -235,7 +232,7 @@ void BalancedTree::add(std::string newWord, int howMuch)
 				this->left = new BalancedTree(newWord,howMuch);
 			}
 			else {
-				this->left->add(newWord);
+				this->left->add(newWord, howMuch);
 			}
 		}
 	}
@@ -342,7 +339,7 @@ std::string BalancedTree::toString() {
 
 	if (this != nullptr) {
 		returnString << this->root->word;
-		returnString << "=";
+		returnString << ":";
 		returnString << this->root->howMany;
 		returnString << std::endl;
 	}
@@ -365,7 +362,7 @@ std::string BalancedTree::showTree(std::string t) {
 		if (right != nullptr) {
 			stream << right->showTree(t + "\t");
 		}
-		stream << t << root->word << "\n";
+		stream << t << root->word << root->howMany << "\n";
 		if (left != nullptr) {
 			stream << left->showTree(t + "\t");
 		}
