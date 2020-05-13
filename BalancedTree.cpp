@@ -2,6 +2,7 @@
 #include <iostream>
 #include<locale>
 
+// Algunos métodos de esta clase fueron tomadas del codigo provisto por el profesor Javier Vasquez.
 /*
 	Constructor primario de la clase BalancedTree donde todo esta null
 */

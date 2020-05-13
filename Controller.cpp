@@ -47,6 +47,11 @@ const std::vector<std::string> OPTIONS_2 = {
 
 // Aquí van las declaraciones a funciones auxiliares.
 
+/*
+	Metodo para convertir un string a minusculas.
+	@param word string a convertir a minusculas.
+	@return string convertido a minuscula.
+*/
 std::string lower(std::string word)
 {
 	std::locale loc;
@@ -58,6 +63,10 @@ std::string lower(std::string word)
 	return result;
 }
 
+/*
+	Metodo para imprimir un vector.
+	@param vector representa el vector a imprimir.
+*/
 void printVector(std::vector<std::string> vector) {
 	std::vector<std::string>::iterator i;
 	for (i = vector.begin(); i != vector.end(); i++) {
@@ -65,16 +74,27 @@ void printVector(std::vector<std::string> vector) {
 	}
 }
 
+/*
+	Metodo para cargar la configuracion del programa.
+	En esto caso obtiene el nombre del ultimo archivo de salida.
+*/
 void loadConfig() {
 	std::unique_ptr<FileManager> file(new FileManager());
 	outputFilename = file->readFromFile(dir + "config.txt");
 }
 
+
+/*
+	Metodo para cargar las excepciones de excepciones.txt.
+*/
 void loadExceptions() {
 	std::unique_ptr<FileManager> file(new FileManager());
 	exceptions = file->readFromFileVector(dir + "excepciones.txt");
 }
 
+/*
+	Metodo para cargar las ocurrencias. Garantizando persistencia de datos al cerrar y reabrir el programa.
+*/
 void loadOcurenceTree() {
 	//wordTree = new BalancedTree();
 	std::unique_ptr<FileManager> file = std::make_unique<FileManager>();
@@ -89,6 +109,9 @@ void loadOcurenceTree() {
 	}
 }
 
+/*
+	Metodo para cargar el arbol de palabras.
+*/
 void loadTree() {
 	wordTree = new BalancedTree();
 	loadOcurenceTree();
@@ -108,6 +131,10 @@ void loadTree() {
 	}
 }
 
+/*
+	metodo para guardar las excepciones.
+	@param exceptions STL vector con las excepciones a guardar.
+*/
 void saveExceptions(std::vector<std::string> exceptions) {
 	std::unique_ptr<FileManager> file(new FileManager());
 	file->writeToFile(dir + "excepciones.txt", exceptions);
@@ -116,11 +143,18 @@ void saveExceptions(std::vector<std::string> exceptions) {
 	loadTree();
 }
 
+/*
+	metodo para guardar el arbol.
+	@param outputFilename string con el nombre del archivo de salida.
+*/
 void saveTree(std::string outputFilename) {
 	std::unique_ptr<FileManager> file = std::make_unique<FileManager>();
 	file->saveTree(outputFilename, wordTree->toString());
 }
 
+/*
+	metodo que muestra las excepciones.
+*/
 void showExceptions() {
 	std::cout << "Excepciones: " << std::endl;
 	exceptions.clear();
@@ -128,6 +162,10 @@ void showExceptions() {
 	printVector(exceptions);
 }
 
+/*
+	metodo que displiega el menu para editar excepciones.
+	@param menu
+*/
 void editExceptions(std::shared_ptr<Menu> menu) {
 	bool finished = false;
 	do {
@@ -202,6 +240,10 @@ void editExceptions(std::shared_ptr<Menu> menu) {
 	} while (!finished);
 }
 
+/*
+	metodo para asignar el archivo de salida.
+	@param menu
+*/
 void setOutputFile(std::shared_ptr<Menu> menu) {
 	std::unique_ptr<FileManager> file = std::make_unique<FileManager>();
 	outputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo de salida con el .txt"));
@@ -216,15 +258,23 @@ void setOutputFile(std::shared_ptr<Menu> menu) {
 
 // -------------------------------------------------
 
-// Constructor y destructor
+/*
+	Constructor del controlador.
+*/
 Controller::Controller() {
 	this->menu = std::make_shared<Menu>();
 }
 
+/*
+	Destructor del controlador.
+*/
 Controller::~Controller() {}
 
 // ---------------------------------------------------
 
+/*
+	metodo para iniciar el menu.
+*/
 void Controller::start(){
 
 	setlocale(LC_ALL, "spanish");

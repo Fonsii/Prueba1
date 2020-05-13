@@ -1,4 +1,6 @@
 #pragma once
+
+// Algunos métodos de esta clase fueron tomadas del codigo provisto por el profesor Javier Vasquez.
 /*
 	Autor: Luis Alfonso Jiménez Aguilar
 	Version 1.0

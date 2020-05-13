@@ -1,6 +1,7 @@
 #include "CharTree.h"
 #include <iostream>
 
+// Algunos métodos de esta clase fueron tomadas del codigo provisto por el profesor Javier Vasquez.
 /*
 	Constructor primario de la clase CharTree donde todo esta null
 */
