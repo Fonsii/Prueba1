@@ -246,7 +246,7 @@ void editExceptions(std::shared_ptr<Menu> menu) {
 */
 void setOutputFile(std::shared_ptr<Menu> menu) {
 	std::unique_ptr<FileManager> file = std::make_unique<FileManager>();
-	outputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo de salida con el .txt"));
+	outputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo de salida. (incluya el .txt)"));
 	std::vector<std::string> data;
 	data.push_back(outputFilename);
 	file->writeToFile(dir + "config.txt", data);
@@ -325,7 +325,7 @@ void Controller::start(){
 			break;			
 		case 6:
 			// Definir Archivo de Carga.
-			inputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo .txt a cargar."));
+			inputFilename = lower(menu->getUserEntryText("Ingrese el nombre del archivo a cargar. (incluya el .txt)"));
 			loadTree();
 			break;			
 		default:
